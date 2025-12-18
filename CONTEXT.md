@@ -37,12 +37,12 @@ A mobile-centric web application to guide users through the Abby Yeung hair care
 - `public/` - Static assets
 
 ## Current Status
-- Full 20-step Abby Yeung method implemented with detailed steps 1-4
+- Full 21-step Abby Yeung method implemented with detailed steps 1-7
 - Interactive step-by-step interface with optional step selection
-- Timer functionality for treatment durations (10 min for step 1, 20 min for step 2)
+- Timer functionality for treatment durations (10 min for step 1, 20 min for step 2, 10 min for step 7)
 - Progress tracking with visual progress bar
 - Mobile-responsive design using Tailwind CSS
-- Product recommendations included for each step
+- Comprehensive product recommendations for each step
 - Build and lint checks passed
 
 ## Implementation Details
