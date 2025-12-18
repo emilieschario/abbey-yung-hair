@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Abby Yeung Hair Care Method",
-  description: "A mobile-centric guide to the 20-step Abby Yeung hair care routine",
+  title: "Abbey Yung Hair Care Method",
+  description: "A mobile-centric guide to the 21-step Abbey Yung hair care routine",
 };
 
 export default function RootLayout({

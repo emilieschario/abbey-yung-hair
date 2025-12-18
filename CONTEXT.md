@@ -1,7 +1,7 @@
-# Abby Yeung Hair Care Method Website
+# Abbey Yung Hair Care Method Website
 
 ## Project Purpose
-A mobile-centric web application to guide users through the Abby Yeung hair care method, a comprehensive 20-step hair care routine. The app helps users navigate optional steps, set timers for treatments, and track their progress through the routine.
+A mobile-centric web application to guide users through the Abbey Yung hair care method, a comprehensive 21-step hair care routine. The app helps users navigate optional steps, set timers for treatments, and track their progress through the routine.
 
 ## Goals
 - Provide an intuitive, mobile-first interface for the hair care routine
@@ -18,7 +18,7 @@ A mobile-centric web application to guide users through the Abby Yeung hair care
 - ESLint for code quality
 
 ## Key Features
-- Step-by-step guide through the 20-step Abby Yeung method
+- Step-by-step guide through the 21-step Abbey Yung method
 - Optional step selection
 - Built-in timers for treatment durations
 - Mobile-responsive design
@@ -37,7 +37,7 @@ A mobile-centric web application to guide users through the Abby Yeung hair care
 - `public/` - Static assets
 
 ## Current Status
-- Full 21-step Abby Yeung method implemented with detailed steps 1-11
+- Full 21-step Abbey Yung method implemented with detailed steps 1-11
 - Interactive step-by-step interface with optional step selection
 - Timer functionality for treatment durations (10 min for step 1, 20 min for step 2)
 - Progress tracking with visual progress bar

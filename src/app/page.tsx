@@ -32,7 +32,7 @@ export default function Home() {
     return (
       <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-6">
         <div className="bg-white rounded-lg shadow-lg max-w-lg w-full p-8 text-center">
-          <h1 className="text-4xl font-bold text-gray-800 mb-4">Abby Yeung Hair Method</h1>
+          <h1 className="text-4xl font-bold text-gray-800 mb-4">Abbey Yung Hair Method</h1>
           <p className="text-gray-600 text-lg mb-6">
             Transform your hair care routine with this comprehensive 21-step method.
             Get glowing, healthy hair with expert recommendations and guided steps.
