@@ -37,13 +37,24 @@ A mobile-centric web application to guide users through the Abby Yeung hair care
 - `public/` - Static assets
 
 ## Current Status
-- Full 21-step Abby Yeung method implemented with detailed steps 1-10
+- Full 21-step Abby Yeung method implemented with detailed steps 1-11
 - Interactive step-by-step interface with optional step selection
 - Timer functionality for treatment durations (10 min for step 1, 20 min for step 2)
 - Progress tracking with visual progress bar
 - Mobile-responsive design using Tailwind CSS
-- Extensive product recommendations for each step including styling products
+- Comprehensive product recommendations for each step including between-wash care
 - Lint checks passed
+
+## Method Overview
+**Pre-Shower**: Pre-Shampoo Bond Repair Treatment* (1-2x a week), Pre-Shampoo Oil Treatment* (as needed)
+
+**In-Shower**: Shampoo (as often as needed)—including clarifying (at least 1x a week), non-clarifying, and medicated* options; Bond Repair Treatment (varies by treatment); Conditioning (pick 1-2 products every wash)—including gloss, conditioner, and mask options
+
+**Post-Shower**: Post-Wash Bond Repair Treatment* (1-2x a week), Leave-in Conditioner & Heat Protectant (every wash), Styling* (as often as needed), Style Sealers* (as often as needed)—including serum, lotion/cream, and oil options
+
+**Between-Wash**: Conditioning Treatment or Oil*, Heat Protection*, Dry Shampoo*
+
+*Steps marked with an asterisk (*) are optional.
 
 ## Implementation Details
 - **Data Structure**: Steps defined in `src/data/steps.ts` with TypeScript interfaces in `src/types.ts`

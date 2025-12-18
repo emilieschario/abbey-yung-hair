@@ -93,11 +93,12 @@ export const steps: Step[] = [
   },
   {
     id: 11,
-    title: 'Curling Iron or Straightener',
-    description: 'Style your hair with heat tools.',
+    title: 'Between-Wash Care',
+    description: 'This final step covers how to maintain your hair between wash days. It\'s broken into three parts depending on your hair\'s needs.',
     isOptional: true,
-    actions: ['Section hair', 'Apply heat protectant if not already done', 'Style as desired'],
-    products: ['Curling iron or straightener'],
+    actions: ['Apply as needed between washes'],
+    products: ['Conditioning: Amika Midnight Mender Overnight Strength Repair Treatment, OGX Coconut Oil Weightless Hydrating Oil, Dove Bond Shield 10-in-1 Oil, OGX Renewing Argan Oil of Morocco Penetrating Oil, Amika Superfruit Star Lightweight Hair Styling Oil, Bumble and Bumble Hairdresser\'s Invisible Oil', 'Heat Protection: Living Proof Perfect Hair Day Heat Styling Spray, IGK Good Behavior Spirulina Protein Smoothing Spray, Moroccanoil Perfect Defense Protect Spray, Oribe Gold Lust Dry Heat Protection Spray', 'Dry Shampoo: Amika Perk Up Plus Extended Clean Dry Shampoo, Living Proof Perfect Hair Day Advanced Clean Dry Shampoo, Dove Volume & Fullness Advanced Dry Shampoo, Not Your Mother\'s Clean Freak Refreshing Dry Shampoo (Fresh Citrus)'],
+    notes: 'Use any of the previously recommended oils for conditioning between washes.',
   },
   {
     id: 12,
