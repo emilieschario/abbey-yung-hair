@@ -40,6 +40,15 @@ export const steps: Step[] = [
   },
   {
     id: 5,
+    title: 'Bond Repair Treatments',
+    description: 'This step focuses on repairing and strengthening the bonds within your hair after cleansing. These treatments help restore damaged hair structure.',
+    isOptional: false,
+    actions: ['Apply to clean, damp hair', 'Leave on for the recommended time', 'Rinse thoroughly'],
+    products: ['Garnier Fructis Hair Filler + Bonding Inner Fiber Repair Treatment', 'OGX Bond Protein Repair Pre-Shampoo Repair & Protect', 'Not Your Mother\'s Tough Love Intense Bonding Treatment', 'L\'Oréal EverPure Bond Repair Concentrate', 'Redken Acidic Bonding Concentrate', 'K18 Biomimetic Hairscience Leave-In Molecular Repair Hair Mask'],
+    notes: 'For K18, use as needed—typically once every few weeks. For all other bond repair treatments, use once a week or more frequently if your hair needs it.',
+  },
+  {
+    id: 6,
     title: 'Medicated Shampoos',
     description: 'For those dealing with scalp issues, medicated shampoos can be incorporated into your routine to address specific concerns like dandruff, itching, irritation, or flaking.',
     isOptional: true,
@@ -48,23 +57,26 @@ export const steps: Step[] = [
     notes: 'Use as needed to prevent or treat scalp issues. These can be used in place of or in addition to the shampoos mentioned above.',
   },
   {
-    id: 6,
-    title: 'Leave-in Conditioner',
-    description: 'Apply a leave-in conditioner for ongoing hydration and detangling.',
-    isOptional: false,
-    actions: ['Apply to towel-dried hair', 'Comb through evenly'],
-    products: ['Leave-in conditioner'],
-  },
-  {
     id: 7,
-    title: 'Heat Protectant Spray',
-    description: 'Protect your hair from heat damage before styling.',
+    title: 'Conditioning',
+    description: 'Step 6 is broken into three parts—glosses, conditioners, and hair masks—giving you flexibility to mix and match based on your hair\'s needs.',
     isOptional: false,
-    actions: ['Spray evenly on damp or dry hair before using heat tools'],
-    products: ['Heat protectant spray'],
+    actions: ['Use at least one conditioning product (whether it\'s a gloss, conditioner, or mask) every time you wash your hair', 'If needed, you can layer multiple products in the same wash session, such as gloss + conditioner, gloss + mask, or conditioner + mask'],
+    products: ['Glosses: L\'Oréal Elvive 8 Second Wonder Water Hyaluron + Plump Lamellar Rinse Out, L\'Oréal EverPure Sulfate-Free Glossing 5-Min Lamination Mask, Amika Flash Instant Shine Mask, L\'Oréal Elvive Glycolic Gloss 5 Minute Lamination Rinse-Off', 'Conditioners: Garnier Fructis Hair Filler + Vitamin Cg Strength Repair Conditioner (sulfate-free), Not Your Mother\'s Tough Love Bonding Conditioner, Dove Intensive Repair Conditioner, Dove Bond Strength Conditioner, L\'Oréal EverPure Sulfate-Free Bond Repair Conditioner, Pureology Strength Cure Conditioner, Amika The Kure Bond Repair Conditioner, Redken Acidic Bonding Concentrate Conditioner', 'Hair Masks: Elizavecca CER-100 Collagen Ceramide Coating Protein Treatment, Pantene Miracle Rescue Deep Repair Conditioner (with melting Pro-V Pearls), Pantene Miracle Rescue Intensive Bond Repair Mask, OGX Bond Protein Repair 3-Minute Treatment Mask, Dove 10-in-1 Serum Mask Intensive Repair, Dove 10-in-1 Serum Mask Bond Strength, Amika The Kure Intense Repair Mask'],
+    notes: 'Glosses add shine and help seal the hair cuticle for a smooth, polished finish. Conditioners provide everyday hydration. Hair masks offer deeper conditioning and intensive repair.',
   },
   {
     id: 8,
+    title: 'Post-Wash Bond Repair Treatment',
+    description: 'This optional step provides an additional bond repair boost after washing, applied to clean, damp hair.',
+    isOptional: true,
+    actions: ['Apply after washing', 'Wait 10 minutes before applying any other styling products'],
+    timerMinutes: 10,
+    products: ['Living Proof Triple Bond Complex Hair Strengthener'],
+    notes: 'Use 1-2 times a week. This step is optional if you\'re already using other bond repair treatments in your routine.',
+  },
+  {
+    id: 9,
     title: 'Blow Dry',
     description: 'Dry your hair using a blow dryer.',
     isOptional: false,
@@ -72,7 +84,7 @@ export const steps: Step[] = [
     products: ['Blow dryer', 'Round brush'],
   },
   {
-    id: 9,
+    id: 10,
     title: 'Diffuse',
     description: 'Use a diffuser to dry curly hair gently.',
     isOptional: true,
@@ -81,7 +93,7 @@ export const steps: Step[] = [
     notes: 'Skip if you have straight hair or prefer air drying.',
   },
   {
-    id: 10,
+    id: 11,
     title: 'Curling Iron or Straightener',
     description: 'Style your hair with heat tools.',
     isOptional: true,
@@ -89,7 +101,7 @@ export const steps: Step[] = [
     products: ['Curling iron or straightener'],
   },
   {
-    id: 11,
+    id: 12,
     title: 'Hairspray',
     description: 'Set your style with hairspray.',
     isOptional: true,
@@ -97,7 +109,7 @@ export const steps: Step[] = [
     products: ['Hairspray'],
   },
   {
-    id: 12,
+    id: 13,
     title: 'Hair Oil or Serum',
     description: 'Add shine and control frizz with oil or serum.',
     isOptional: false,
@@ -105,7 +117,7 @@ export const steps: Step[] = [
     products: ['Hair oil or serum'],
   },
   {
-    id: 13,
+    id: 14,
     title: 'Weekly Deep Treatment',
     description: 'Apply a weekly intensive treatment.',
     isOptional: true,
@@ -114,7 +126,7 @@ export const steps: Step[] = [
     notes: 'Do once a week.',
   },
   {
-    id: 14,
+    id: 15,
     title: 'Protein Treatment',
     description: 'Strengthen hair with a protein treatment.',
     isOptional: true,
@@ -123,7 +135,7 @@ export const steps: Step[] = [
     notes: 'Use 1-2 times per week if hair feels weak.',
   },
   {
-    id: 15,
+    id: 16,
     title: 'Hair Mask',
     description: 'Use a nourishing hair mask.',
     isOptional: true,
@@ -132,7 +144,7 @@ export const steps: Step[] = [
     products: ['Hair mask'],
   },
   {
-    id: 16,
+    id: 17,
     title: 'Rinse Out Conditioner',
     description: 'Apply a rinse-out conditioner.',
     isOptional: false,
@@ -140,7 +152,7 @@ export const steps: Step[] = [
     products: ['Conditioner'],
   },
   {
-    id: 17,
+    id: 18,
     title: 'Detangler',
     description: 'Use a detangler to smooth hair.',
     isOptional: true,
@@ -148,7 +160,7 @@ export const steps: Step[] = [
     products: ['Detangler spray'],
   },
   {
-    id: 18,
+    id: 19,
     title: 'Anti-Frizz Serum',
     description: 'Control frizz with serum.',
     isOptional: true,
@@ -156,7 +168,7 @@ export const steps: Step[] = [
     products: ['Anti-frizz serum'],
   },
   {
-    id: 19,
+    id: 20,
     title: 'Hair Vitamins',
     description: 'Apply hair vitamins for nourishment.',
     isOptional: true,
@@ -164,7 +176,7 @@ export const steps: Step[] = [
     products: ['Hair vitamins'],
   },
   {
-    id: 20,
+    id: 21,
     title: 'Final Styling',
     description: 'Complete your look with final styling products.',
     isOptional: true,
