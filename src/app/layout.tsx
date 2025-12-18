@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Next.js Template",
-  description: "A minimal Next.js starter template",
+  title: "Abby Yeung Hair Care Method",
+  description: "A mobile-centric guide to the 20-step Abby Yeung hair care routine",
 };
 
 export default function RootLayout({
