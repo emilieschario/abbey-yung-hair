@@ -9,9 +9,10 @@ interface StepComponentProps {
   onPrevious: () => void;
   isFirst: boolean;
   isLast: boolean;
+  onStepChoice?: (stepId: number, performed: boolean) => void;
 }
 
-export default function StepComponent({ step, onNext, onPrevious, isFirst, isLast }: StepComponentProps) {
+export default function StepComponent({ step, onNext, onPrevious, isFirst, isLast, onStepChoice }: StepComponentProps) {
   const [doStep, setDoStep] = useState<boolean | null>(null);
   const [timerActive, setTimerActive] = useState(false);
   const [timeLeft, setTimeLeft] = useState(step.timerMinutes ? step.timerMinutes * 60 : 0);
@@ -28,6 +29,12 @@ export default function StepComponent({ step, onNext, onPrevious, isFirst, isLas
       alert('Timer finished!');
     }
   }, [timerActive, timeLeft]);
+
+  useEffect(() => {
+    if (!step.isOptional) {
+      onStepChoice?.(step.id, true);
+    }
+  }, [step.id, step.isOptional, onStepChoice]);
 
   const startTimer = () => {
     if (step.timerMinutes) {
@@ -51,13 +58,19 @@ export default function StepComponent({ step, onNext, onPrevious, isFirst, isLas
           {step.notes && <p className="text-sm text-gray-500 mb-6">{step.notes}</p>}
           <div className="flex gap-4">
             <button
-              onClick={() => setDoStep(false)}
+              onClick={() => {
+                setDoStep(false);
+                onStepChoice?.(step.id, false);
+              }}
               className="flex-1 bg-gray-200 text-gray-800 py-3 px-6 rounded-lg font-semibold hover:bg-gray-300 transition-colors"
             >
               Skip
             </button>
             <button
-              onClick={() => setDoStep(true)}
+              onClick={() => {
+                setDoStep(true);
+                onStepChoice?.(step.id, true);
+              }}
               className="flex-1 bg-blue-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-600 transition-colors"
             >
               Do It
