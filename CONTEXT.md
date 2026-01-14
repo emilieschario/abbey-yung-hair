@@ -22,7 +22,9 @@ A mobile-centric web application to guide users through the Abbey Yung hair care
 - Optional step selection
 - Built-in timers for treatment durations
 - Mobile-responsive design
-- Progress tracking
+- Progress tracking during routines
+- Session tracking and statistics for completed routines
+- Historical data on step performance frequency
 
 ## Architecture Decisions
 - Using Next.js App Router for modern React development
