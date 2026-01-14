@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { steps } from '../data/steps';
 import { Session, StepRecord } from '../types';
 import StepComponent from '../components/StepComponent';
@@ -24,7 +24,7 @@ export default function Home() {
     localStorage.setItem('hairCareSessions', JSON.stringify(newSessions));
   };
 
-  const handleStepChoice = (stepId: number, performed: boolean) => {
+  const handleStepChoice = useCallback((stepId: number, performed: boolean) => {
     setCurrentSession(prev => {
       const existing = prev.find(s => s.id === stepId);
       if (existing) {
@@ -33,7 +33,7 @@ export default function Home() {
         return [...prev, { id: stepId, performed }];
       }
     });
-  };
+  }, []);
 
   const handleStart = () => {
     setIsStarted(true);
