@@ -68,12 +68,16 @@ export default function StepComponent({ step, onNext, onPrevious, isFirst, isLas
             </button>
             <button
               onClick={() => {
-                setDoStep(true);
-                onStepChoice?.(step.id, true);
+                if (step.timerMinutes) {
+                  startTimer();
+                } else {
+                  setDoStep(true);
+                  onStepChoice?.(step.id, true);
+                }
               }}
               className="flex-1 bg-blue-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-600 transition-colors"
             >
-              Done
+              {step.timerMinutes ? 'Start Timer' : 'Done'}
             </button>
             <button
               onClick={onNext}
