@@ -69,6 +69,7 @@ export default function StepComponent({ step, onNext, onPrevious, isFirst, isLas
             <button
               onClick={() => {
                 if (step.timerMinutes) {
+                  setDoStep(true);
                   startTimer();
                 } else {
                   setDoStep(true);
