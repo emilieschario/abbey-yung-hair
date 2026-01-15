@@ -11,17 +11,32 @@ export default function Home() {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [sessions, setSessions] = useState<Session[]>([]);
   const [currentSession, setCurrentSession] = useState<StepRecord[]>([]);
+  const [username, setUsername] = useState<string>('');
+  const [usernameEntered, setUsernameEntered] = useState(false);
 
   useEffect(() => {
     const stored = localStorage.getItem('hairCareSessions');
     if (stored) {
       setSessions(JSON.parse(stored));
     }
+    const storedUsername = localStorage.getItem('hairCareUsername');
+    if (storedUsername) {
+      setUsername(storedUsername);
+      setUsernameEntered(true);
+    }
   }, []);
 
   const saveSessions = (newSessions: Session[]) => {
     setSessions(newSessions);
     localStorage.setItem('hairCareSessions', JSON.stringify(newSessions));
+  };
+
+  const handleUsernameSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (username.trim()) {
+      localStorage.setItem('hairCareUsername', username);
+      setUsernameEntered(true);
+    }
   };
 
   const handleStepChoice = useCallback((stepId: number, performed: boolean) => {
@@ -36,6 +51,10 @@ export default function Home() {
   }, []);
 
   const handleStart = () => {
+    if (!usernameEntered) {
+      alert('Please enter your username first!');
+      return;
+    }
     setIsStarted(true);
     setCurrentStepIndex(0);
     setCurrentSession([]);
@@ -120,6 +139,41 @@ export default function Home() {
       );
     }
 
+    if (!usernameEntered) {
+      return (
+        <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-6">
+          <div className="bg-white rounded-lg shadow-lg max-w-lg w-full p-8 text-center">
+            <h1 className="text-4xl font-bold text-gray-800 mb-4">Abbey Yung Hair Method</h1>
+            <p className="text-gray-600 text-lg mb-6">
+              Transform your hair care routine with this comprehensive 21-step method.
+              Get glowing, healthy hair with expert recommendations and guided steps.
+            </p>
+            <div className="space-y-4">
+              <form onSubmit={handleUsernameSubmit} className="space-y-4">
+                <input
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="Enter your username"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  required
+                />
+                <button
+                  type="submit"
+                  className="bg-blue-500 text-white text-xl px-8 py-4 rounded-lg font-semibold hover:bg-blue-600 transition-colors w-full"
+                >
+                  Continue
+                </button>
+              </form>
+            </div>
+            <div className="mt-6 text-gray-500">
+              Follow the steps for salon-quality results at home!
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-6">
         <div className="bg-white rounded-lg shadow-lg max-w-lg w-full p-8 text-center">
@@ -145,7 +199,7 @@ export default function Home() {
             )}
           </div>
           <div className="mt-6 text-gray-500">
-            Follow the steps for salon-quality results at home!
+            Welcome, {username}! Follow the steps for salon-quality results at home!
           </div>
         </div>
       </div>
