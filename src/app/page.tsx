@@ -141,32 +141,41 @@ export default function Home() {
 
     if (!usernameEntered) {
       return (
-        <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-6">
-          <div className="bg-white rounded-lg shadow-lg max-w-lg w-full p-8 text-center">
-            <h1 className="text-4xl font-bold text-gray-800 mb-4">Abbey Yung Hair Method</h1>
-            <p className="text-gray-600 text-lg mb-6">
+        <div className="min-h-screen bg-gradient-to-br from-primary to-secondary flex flex-col items-center justify-center p-6">
+          <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl max-w-lg w-full p-8 text-center border border-white/20">
+            <h1 className="text-4xl font-bold text-slate-800 mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              Abbey Yung Hair Method
+            </h1>
+            <p className="text-slate-600 text-lg mb-8 leading-relaxed">
               Transform your hair care routine with this comprehensive 21-step method.
               Get glowing, healthy hair with expert recommendations and guided steps.
             </p>
-            <div className="space-y-4">
-              <form onSubmit={handleUsernameSubmit} className="space-y-4">
-                <input
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder="Enter your username"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  required
-                />
+            <div className="space-y-6">
+              <form onSubmit={handleUsernameSubmit} className="space-y-6">
+                <div className="relative">
+                  <input
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="Enter your username"
+                    className="w-full px-6 py-4 bg-white/80 border border-slate-200 rounded-xl focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all duration-300 text-lg"
+                    required
+                  />
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
+                    <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg>
+                  </div>
+                </div>
                 <button
                   type="submit"
-                  className="bg-blue-500 text-white text-xl px-8 py-4 rounded-lg font-semibold hover:bg-blue-600 transition-colors w-full"
+                  className="gradient-bg text-white text-xl px-8 py-4 rounded-xl font-semibold hover:opacity-90 transition-all duration-300 w-full transform hover:scale-105"
                 >
                   Continue
                 </button>
               </form>
             </div>
-            <div className="mt-6 text-gray-500">
+            <div className="mt-8 text-slate-500 text-sm">
               Follow the steps for salon-quality results at home!
             </div>
           </div>
@@ -175,30 +184,32 @@ export default function Home() {
     }
 
     return (
-      <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-6">
-        <div className="bg-white rounded-lg shadow-lg max-w-lg w-full p-8 text-center">
-          <h1 className="text-4xl font-bold text-gray-800 mb-4">Abbey Yung Hair Method</h1>
-          <p className="text-gray-600 text-lg mb-6">
+      <div className="min-h-screen bg-gradient-to-br from-primary to-secondary flex flex-col items-center justify-center p-6">
+        <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl max-w-lg w-full p-8 text-center border border-white/20">
+          <h1 className="text-4xl font-bold text-slate-800 mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+            Abbey Yung Hair Method
+          </h1>
+          <p className="text-slate-600 text-lg mb-8 leading-relaxed">
             Transform your hair care routine with this comprehensive 21-step method.
             Get glowing, healthy hair with expert recommendations and guided steps.
           </p>
           <div className="space-y-4">
             <button
               onClick={handleStart}
-              className="bg-blue-500 text-white text-xl px-8 py-4 rounded-lg font-semibold hover:bg-blue-600 transition-colors w-full"
+              className="gradient-bg text-white text-xl px-8 py-4 rounded-xl font-semibold hover:opacity-90 transition-all duration-300 w-full transform hover:scale-105"
             >
               Get Started
             </button>
             {sessions.length > 0 && (
               <button
                 onClick={() => setViewTracking(true)}
-                className="bg-green-500 text-white text-lg px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors w-full"
+                className="bg-green-500 text-white text-lg px-6 py-3 rounded-xl font-semibold hover:bg-green-600 transition-colors w-full"
               >
                 View Tracking ({sessions.length} sessions)
               </button>
             )}
           </div>
-          <div className="mt-6 text-gray-500">
+          <div className="mt-6 text-slate-500 text-sm">
             Welcome, {username}! Follow the steps for salon-quality results at home!
           </div>
         </div>

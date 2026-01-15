@@ -51,18 +51,18 @@ export default function StepComponent({ step, onNext, onPrevious, isFirst, isLas
 
   if (step.isOptional && doStep === null) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-50">
-        <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
-          <h2 className="text-2xl font-bold mb-4 text-center">Step {step.id}: {step.title}</h2>
-          <p className="text-gray-700 mb-6 text-center">{step.description}</p>
-          {step.notes && <p className="text-sm text-gray-500 mb-6">{step.notes}</p>}
-          <div className="flex gap-4">
+      <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gradient-to-br from-primary to-secondary">
+        <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-6 w-full max-w-md border border-white/20">
+          <h2 className="text-2xl font-bold mb-4 text-center text-slate-800">Step {step.id}: {step.title}</h2>
+          <p className="text-slate-600 mb-6 text-center leading-relaxed">{step.description}</p>
+          {step.notes && <p className="text-sm text-slate-500 mb-6 italic">{step.notes}</p>}
+          <div className="grid grid-cols-3 gap-3">
             <button
               onClick={() => {
                 setDoStep(false);
                 onStepChoice?.(step.id, false);
               }}
-              className="flex-1 bg-gray-200 text-gray-800 py-3 px-6 rounded-lg font-semibold hover:bg-gray-300 transition-colors"
+              className="bg-white/70 text-slate-700 py-3 px-4 rounded-xl font-semibold hover:bg-white transition-colors border border-slate-200"
             >
               Skip
             </button>
@@ -76,16 +76,18 @@ export default function StepComponent({ step, onNext, onPrevious, isFirst, isLas
                   onStepChoice?.(step.id, true);
                 }
               }}
-              className="flex-1 bg-blue-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-600 transition-colors"
+              className={`gradient-bg text-white py-3 px-4 rounded-xl font-semibold hover:opacity-90 transition-colors ${step.timerMinutes ? '' : 'col-span-3'}`}
             >
               {step.timerMinutes ? 'Start Timer' : 'Done'}
             </button>
-            <button
-              onClick={onNext}
-              className="flex-1 bg-gray-200 text-gray-800 py-3 px-6 rounded-lg font-semibold hover:bg-gray-300 transition-colors"
-            >
-              See Next
-            </button>
+            {step.timerMinutes && (
+              <button
+                onClick={onNext}
+                className="bg-white/70 text-slate-700 py-3 px-4 rounded-xl font-semibold hover:bg-white transition-colors border border-slate-200"
+              >
+                See Next
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -94,37 +96,75 @@ export default function StepComponent({ step, onNext, onPrevious, isFirst, isLas
 
   if (!step.isOptional || doStep) {
     return (
-      <div className="flex flex-col min-h-screen p-4 bg-gray-50">
-        <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md mx-auto flex-1">
-          <h2 className="text-2xl font-bold mb-4 text-center">Step {step.id}: {step.title}</h2>
-          <p className="text-gray-700 mb-4">{step.description}</p>
-
-          {step.actions.length > 0 && (
-            <div className="mb-6">
-              <h3 className="font-semibold mb-2">Actions:</h3>
-              <ul className="list-disc list-inside space-y-1">
-                {step.actions.map((action, index) => (
-                  <li key={index} className="text-gray-600">{action}</li>
-                ))}
-              </ul>
+      <div className="flex flex-col min-h-screen p-4 bg-gradient-to-br from-primary to-secondary">
+        <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-6 w-full max-w-md mx-auto flex-1 border border-white/20">
+          <div className="mb-4">
+            <div className="flex justify-between items-start mb-2">
+              <h2 className="text-2xl font-bold text-slate-800">Step {step.id}</h2>
+              <span className="text-sm bg-primary/10 text-primary px-3 py-1 rounded-full font-medium">
+                {step.isOptional ? 'Optional' : 'Required'}
+              </span>
             </div>
-          )}
+            <h3 className="text-xl font-semibold text-slate-700 mb-3">{step.title}</h3>
+          </div>
 
-          {step.products && step.products.length > 0 && (
-            <div className="mb-6">
-              <h3 className="font-semibold mb-2">Products needed:</h3>
-              <ul className="list-disc list-inside space-y-1">
-                {step.products.map((product, index) => (
-                  <li key={index} className="text-gray-600">{product}</li>
-                ))}
-              </ul>
-            </div>
-          )}
+          <div className="bg-white/60 rounded-xl p-4 mb-6 border border-slate-100">
+            <p className="text-slate-600 mb-4 leading-relaxed">{step.description}</p>
+
+            {step.actions.length > 0 && (
+              <div className="mb-4">
+                <h4 className="font-semibold mb-2 text-slate-700 flex items-center">
+                  <svg className="w-5 h-5 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                  </svg>
+                  Actions:
+                </h4>
+                <ul className="space-y-2 ml-6">
+                  {step.actions.map((action, index) => (
+                    <li key={index} className="text-slate-600 flex items-start">
+                      <span className="text-primary mr-2">•</span>
+                      {action}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {step.products && step.products.length > 0 && (
+              <div className="mb-4">
+                <h4 className="font-semibold mb-2 text-slate-700 flex items-center">
+                  <svg className="w-5 h-5 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                  </svg>
+                  Products:
+                </h4>
+                <ul className="space-y-2 ml-6">
+                  {step.products.map((product, index) => (
+                    <li key={index} className="text-slate-600 flex items-start">
+                      <span className="text-primary mr-2">•</span>
+                      {product}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {step.notes && (
+              <div className="mt-4 p-3 bg-primary/5 rounded-lg">
+                <p className="text-sm text-slate-600 italic">
+                  <svg className="w-4 h-4 inline mr-1 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  {step.notes}
+                </p>
+              </div>
+            )}
+          </div>
 
           {step.timerMinutes && !timerActive && (
             <button
               onClick={startTimer}
-              className="w-full bg-green-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-green-600 transition-colors mb-4"
+              className="w-full gradient-bg text-white py-3 px-6 rounded-xl font-semibold hover:opacity-90 transition-all duration-300 mb-4 transform hover:scale-105"
             >
               Start {step.timerMinutes} Minute Timer
             </button>
@@ -132,25 +172,23 @@ export default function StepComponent({ step, onNext, onPrevious, isFirst, isLas
 
           {timerActive && (
             <div className="text-center mb-6">
-              <div className="text-4xl font-bold text-blue-600 mb-2">
+              <div className="text-4xl font-bold text-primary mb-2">
                 {formatTime(timeLeft)}
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-4">
+              <div className="w-full bg-slate-200 rounded-full h-3">
                 <div
-                  className="bg-blue-600 h-4 rounded-full transition-all duration-1000"
+                  className="bg-primary h-3 rounded-full transition-all duration-1000"
                   style={{ width: `${((step.timerMinutes! * 60 - timeLeft) / (step.timerMinutes! * 60)) * 100}%` }}
                 ></div>
               </div>
             </div>
           )}
 
-          {step.notes && <p className="text-sm text-gray-500 mb-6">{step.notes}</p>}
-
-          <div className="flex gap-4">
+          <div className="grid grid-cols-3 gap-3 mt-auto">
             {!isFirst && (
               <button
                 onClick={onPrevious}
-                className="flex-1 bg-gray-200 text-gray-800 py-3 px-6 rounded-lg font-semibold hover:bg-gray-300 transition-colors"
+                className="bg-white/70 text-slate-700 py-3 px-4 rounded-xl font-semibold hover:bg-white transition-colors border border-slate-200"
               >
                 Previous
               </button>
@@ -161,17 +199,18 @@ export default function StepComponent({ step, onNext, onPrevious, isFirst, isLas
                 onNext();
               }}
               disabled={step.timerMinutes ? timerActive : false}
-              className="flex-1 bg-blue-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className={`gradient-bg text-white py-3 px-4 rounded-xl font-semibold hover:opacity-90 transition-colors ${step.timerMinutes ? '' : 'col-span-2'}`}
             >
               Done
             </button>
-            <button
-              onClick={onNext}
-              disabled={step.timerMinutes ? timerActive : false}
-              className="flex-1 bg-gray-200 text-gray-800 py-3 px-6 rounded-lg font-semibold hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              See Next
-            </button>
+            {!step.timerMinutes && (
+              <button
+                onClick={onNext}
+                className="bg-white/70 text-slate-700 py-3 px-4 rounded-xl font-semibold hover:bg-white transition-colors border border-slate-200"
+              >
+                See Next
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -180,13 +219,18 @@ export default function StepComponent({ step, onNext, onPrevious, isFirst, isLas
 
   // If skipped optional step
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-50">
-      <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-4 text-center">Step {step.id} Skipped</h2>
-        <p className="text-gray-700 mb-6 text-center">You chose to skip this optional step.</p>
+    <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gradient-to-br from-primary to-secondary">
+      <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-6 w-full max-w-md border border-white/20 text-center">
+        <div className="mb-4">
+          <svg className="w-16 h-16 mx-auto mb-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <h2 className="text-2xl font-bold mb-2 text-slate-800">Step {step.id} Skipped</h2>
+          <p className="text-slate-600 mb-6">You chose to skip this optional step.</p>
+        </div>
         <button
           onClick={onNext}
-          className="w-full bg-blue-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-600 transition-colors"
+          className="gradient-bg text-white py-3 px-6 rounded-xl font-semibold hover:opacity-90 transition-all duration-300 w-full transform hover:scale-105"
         >
           Continue to Next Step
         </button>
