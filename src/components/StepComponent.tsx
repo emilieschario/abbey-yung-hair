@@ -156,11 +156,21 @@ export default function StepComponent({ step, onNext, onPrevious, isFirst, isLas
               </button>
             )}
             <button
-              onClick={onNext}
+              onClick={() => {
+                onStepChoice?.(step.id, true);
+                onNext();
+              }}
               disabled={step.timerMinutes ? timerActive : false}
               className="flex-1 bg-blue-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isLast ? 'Finish' : 'Next'}
+              Done
+            </button>
+            <button
+              onClick={onNext}
+              disabled={step.timerMinutes ? timerActive : false}
+              className="flex-1 bg-gray-200 text-gray-800 py-3 px-6 rounded-lg font-semibold hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              See Next
             </button>
           </div>
         </div>
