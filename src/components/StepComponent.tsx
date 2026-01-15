@@ -25,10 +25,10 @@ export default function StepComponent({ step, onNext, onPrevious, isFirst, isLas
       return () => clearInterval(timer);
     } else if (timeLeft === 0 && timerActive) {
       setTimerActive(false);
-      // Play sound or notification here if possible
-      alert('Timer finished!');
+      onStepChoice?.(step.id, true);
+      onNext();
     }
-  }, [timerActive, timeLeft]);
+  }, [timerActive, timeLeft, step.id, onStepChoice, onNext]);
 
   useEffect(() => {
     if (!step.isOptional) {
