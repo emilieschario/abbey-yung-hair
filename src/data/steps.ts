@@ -1,4 +1,4 @@
-import { Step } from '../types';
+import { Step, UserSession } from '../types';
 
 export const steps: Step[] = [
   {
@@ -24,7 +24,7 @@ export const steps: Step[] = [
     id: 3,
     title: 'Clarifying Shampoo',
     description: 'Clarifying shampoos are designed to deep-clean your hair and scalp, removing product buildup, excess oils, and impurities that regular shampoos may leave behind.',
-    isOptional: false,
+    isOptional: true,
     actions: ['Wet hair thoroughly', 'Apply clarifying shampoo and massage into scalp', 'Rinse thoroughly'],
     products: ['L\'Oréal EverPure Sulfate-Free Clarifying Shampoo', 'Garnier Fructis Pure Clean Silicone-Free Purifying Shampoo', 'Dove Scalp + Hair Therapy Clarifying Shampoo', 'Pantene Pro-V Volume & Body Shampoo', 'L\'Oréal Professionnel Metal Detox Shampoo', 'Living Proof Clarifying Detox Shampoo', 'K18 Peptide Prep Shampoo', 'OUAI Detox Shampoo'],
     notes: 'Use at least once a week, or more frequently if needed based on your hair and scalp condition.',
@@ -42,7 +42,7 @@ export const steps: Step[] = [
     id: 5,
     title: 'Bond Repair Treatments',
     description: 'This step focuses on repairing and strengthening the bonds within your hair after cleansing. These treatments help restore damaged hair structure.',
-    isOptional: false,
+    isOptional: true,
     actions: ['Apply to clean, damp hair', 'Leave on for the recommended time', 'Rinse thoroughly'],
     products: ['Garnier Fructis Hair Filler + Bonding Inner Fiber Repair Treatment', 'OGX Bond Protein Repair Pre-Shampoo Repair & Protect', 'Not Your Mother\'s Tough Love Intense Bonding Treatment', 'L\'Oréal EverPure Bond Repair Concentrate', 'Redken Acidic Bonding Concentrate', 'K18 Biomimetic Hairscience Leave-In Molecular Repair Hair Mask'],
     notes: 'For K18, use as needed—typically once every few weeks. For all other bond repair treatments, use once a week or more frequently if your hair needs it.',
@@ -112,7 +112,7 @@ export const steps: Step[] = [
     id: 13,
     title: 'Hair Oil or Serum',
     description: 'Add shine and control frizz with oil or serum.',
-    isOptional: false,
+    isOptional: true,
     actions: ['Apply a small amount to ends or all hair'],
     products: ['Hair oil or serum'],
   },
@@ -147,7 +147,7 @@ export const steps: Step[] = [
     id: 17,
     title: 'Rinse Out Conditioner',
     description: 'Apply a rinse-out conditioner.',
-    isOptional: false,
+    isOptional: true,
     actions: ['Apply to wet hair', 'Rinse after 2-3 minutes'],
     products: ['Conditioner'],
   },
