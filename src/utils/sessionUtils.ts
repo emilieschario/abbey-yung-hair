@@ -1,5 +1,5 @@
 import { UserSession, StepRecord } from '../types';
-import { userSessions } from '../data/userSessions';
+import { supabase } from '../lib/supabaseClient';
 import { steps } from '../data/steps';
 
 /**
@@ -9,26 +9,44 @@ import { steps } from '../data/steps';
  * @param stepId The ID of the step.
  * @param performed Whether the step was performed.
  */
-export const recordStepStatus = (
+export const recordStepStatus = async (
   userId: string,
   date: string,
   stepId: number,
   performed: boolean
-): void => {
-  const existingSessionIndex = userSessions.findIndex(
-    (session) => session.userId === userId && session.date === date
-  );
+): Promise<void> => {
+  const { data: existingSession, error } = await supabase
+    .from('user_sessions')
+    .select('*')
+    .eq('userId', userId)
+    .eq('date', date)
+    .single();
 
-  if (existingSessionIndex >= 0) {
-    const session = userSessions[existingSessionIndex];
-    const stepRecordIndex = session.steps.findIndex(
-      (step) => step.id === stepId
+  if (error && error.code !== 'PGRST116') {
+    console.error('Error fetching session:', error);
+    throw error;
+  }
+
+  if (existingSession) {
+    const stepRecordIndex = existingSession.steps.findIndex(
+      (step: StepRecord) => step.id === stepId
     );
 
     if (stepRecordIndex >= 0) {
-      session.steps[stepRecordIndex].performed = performed;
+      existingSession.steps[stepRecordIndex].performed = performed;
     } else {
-      session.steps.push({ id: stepId, performed });
+      existingSession.steps.push({ id: stepId, performed });
+    }
+
+    const { error: updateError } = await supabase
+      .from('user_sessions')
+      .update({ steps: existingSession.steps })
+      .eq('userId', userId)
+      .eq('date', date);
+
+    if (updateError) {
+      console.error('Error updating session:', updateError);
+      throw updateError;
     }
   } else {
     const newSession: UserSession = {
@@ -36,7 +54,15 @@ export const recordStepStatus = (
       date,
       steps: [{ id: stepId, performed }],
     };
-    userSessions.push(newSession);
+
+    const { error: insertError } = await supabase
+      .from('user_sessions')
+      .insert([newSession]);
+
+    if (insertError) {
+      console.error('Error inserting session:', insertError);
+      throw insertError;
+    }
   }
 };
 
@@ -47,17 +73,25 @@ export const recordStepStatus = (
  * @param stepId The ID of the step.
  * @returns The status of the step (true if performed, false otherwise).
  */
-export const getStepStatus = (
+export const getStepStatus = async (
   userId: string,
   date: string,
   stepId: number
-): boolean => {
-  const session = userSessions.find(
-    (session) => session.userId === userId && session.date === date
-  );
+): Promise<boolean> => {
+  const { data: session, error } = await supabase
+    .from('user_sessions')
+    .select('steps')
+    .eq('userId', userId)
+    .eq('date', date)
+    .single();
+
+  if (error) {
+    console.error('Error fetching session:', error);
+    return false;
+  }
 
   if (session) {
-    const stepRecord = session.steps.find((step) => step.id === stepId);
+    const stepRecord = session.steps.find((step: StepRecord) => step.id === stepId);
     return stepRecord ? stepRecord.performed : false;
   }
 
@@ -70,13 +104,21 @@ export const getStepStatus = (
  * @param date The session date in YYYY-MM-DD format.
  * @returns An array of step records for the user on the specified date.
  */
-export const getAllStepStatuses = (
+export const getAllStepStatuses = async (
   userId: string,
   date: string
-): StepRecord[] => {
-  const session = userSessions.find(
-    (session) => session.userId === userId && session.date === date
-  );
+): Promise<StepRecord[]> => {
+  const { data: session, error } = await supabase
+    .from('user_sessions')
+    .select('steps')
+    .eq('userId', userId)
+    .eq('date', date)
+    .single();
+
+  if (error) {
+    console.error('Error fetching session:', error);
+    return [];
+  }
 
   if (session) {
     return session.steps;
@@ -90,8 +132,18 @@ export const getAllStepStatuses = (
  * @param userId The ID of the user.
  * @returns An array of sessions for the user.
  */
-export const getUserSessions = (userId: string): UserSession[] => {
-  return userSessions.filter((session) => session.userId === userId);
+export const getUserSessions = async (userId: string): Promise<UserSession[]> => {
+  const { data: sessions, error } = await supabase
+    .from('user_sessions')
+    .select('*')
+    .eq('userId', userId);
+
+  if (error) {
+    console.error('Error fetching user sessions:', error);
+    return [];
+  }
+
+  return sessions || [];
 };
 
 /**
@@ -99,6 +151,16 @@ export const getUserSessions = (userId: string): UserSession[] => {
  * @param date The session date in YYYY-MM-DD format.
  * @returns An array of sessions for the specified date.
  */
-export const getSessionsByDate = (date: string): UserSession[] => {
-  return userSessions.filter((session) => session.date === date);
+export const getSessionsByDate = async (date: string): Promise<UserSession[]> => {
+  const { data: sessions, error } = await supabase
+    .from('user_sessions')
+    .select('*')
+    .eq('date', date);
+
+  if (error) {
+    console.error('Error fetching sessions by date:', error);
+    return [];
+  }
+
+  return sessions || [];
 };
