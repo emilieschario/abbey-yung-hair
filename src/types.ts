@@ -19,3 +19,16 @@ export interface Session {
   date: string;
   steps: StepRecord[];
 }
+
+export interface UserSession {
+  userId: string;
+  date: string;
+  steps: StepRecord[];
+}
+
+export interface UserSessionRecord {
+  userId: string;
+  date: string;
+  stepId: number;
+  performed: boolean;
+}

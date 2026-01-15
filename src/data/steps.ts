@@ -1,4 +1,4 @@
-import { Step } from '../types';
+import { Step, UserSession } from '../types';
 
 export const steps: Step[] = [
   {
