@@ -73,7 +73,13 @@ export default function StepComponent({ step, onNext, onPrevious, isFirst, isLas
               }}
               className="flex-1 bg-blue-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-600 transition-colors"
             >
-              Do It
+              Done
+            </button>
+            <button
+              onClick={onNext}
+              className="flex-1 bg-gray-200 text-gray-800 py-3 px-6 rounded-lg font-semibold hover:bg-gray-300 transition-colors"
+            >
+              See Next
             </button>
           </div>
         </div>
