@@ -1,6 +1,5 @@
 import { UserSession, StepRecord } from '../types';
 import { supabase } from '../lib/supabaseClient';
-import { steps } from '../data/steps';
 
 /**
  * Records the status of a step for a user on a specific date.
@@ -15,6 +14,11 @@ export const recordStepStatus = async (
   stepId: number,
   performed: boolean
 ): Promise<void> => {
+  if (!supabase) {
+    console.warn('Supabase client not initialized. Skipping recordStepStatus.');
+    return;
+  }
+
   const { data: existingSession, error } = await supabase
     .from('user_sessions')
     .select('*')
@@ -78,6 +82,11 @@ export const getStepStatus = async (
   date: string,
   stepId: number
 ): Promise<boolean> => {
+  if (!supabase) {
+    console.warn('Supabase client not initialized. Returning false for getStepStatus.');
+    return false;
+  }
+
   const { data: session, error } = await supabase
     .from('user_sessions')
     .select('steps')
@@ -108,6 +117,11 @@ export const getAllStepStatuses = async (
   userId: string,
   date: string
 ): Promise<StepRecord[]> => {
+  if (!supabase) {
+    console.warn('Supabase client not initialized. Returning empty array for getAllStepStatuses.');
+    return [];
+  }
+
   const { data: session, error } = await supabase
     .from('user_sessions')
     .select('steps')
@@ -133,6 +147,11 @@ export const getAllStepStatuses = async (
  * @returns An array of sessions for the user.
  */
 export const getUserSessions = async (userId: string): Promise<UserSession[]> => {
+  if (!supabase) {
+    console.warn('Supabase client not initialized. Returning empty array for getUserSessions.');
+    return [];
+  }
+
   const { data: sessions, error } = await supabase
     .from('user_sessions')
     .select('*')
@@ -152,6 +171,11 @@ export const getUserSessions = async (userId: string): Promise<UserSession[]> =>
  * @returns An array of sessions for the specified date.
  */
 export const getSessionsByDate = async (date: string): Promise<UserSession[]> => {
+  if (!supabase) {
+    console.warn('Supabase client not initialized. Returning empty array for getSessionsByDate.');
+    return [];
+  }
+
   const { data: sessions, error } = await supabase
     .from('user_sessions')
     .select('*')
