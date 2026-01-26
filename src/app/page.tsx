@@ -2,17 +2,39 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { steps } from '../data/steps';
-import { Session, StepRecord } from '../types';
+import { Session, StepRecord, Step } from '../types';
 import StepComponent from '../components/StepComponent';
 
 export default function Home() {
   const [isStarted, setIsStarted] = useState(false);
+  const [showPlanning, setShowPlanning] = useState(false);
   const [viewTracking, setViewTracking] = useState(false);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [sessions, setSessions] = useState<Session[]>([]);
   const [currentSession, setCurrentSession] = useState<StepRecord[]>([]);
   const [username, setUsername] = useState<string>('');
   const [usernameEntered, setUsernameEntered] = useState(false);
+
+  const getStepCategory = (step: Step, sessions: Session[]): 'required' | 'optional' | 'recommended' => {
+    const lastPerformed = sessions
+      .filter(s => s.steps.some(sr => sr.id === step.id && sr.performed))
+      .map(s => new Date(s.date))
+      .sort((a, b) => b.getTime() - a.getTime())[0];
+
+    if (!lastPerformed) {
+      return 'recommended';
+    }
+
+    const daysSince = (new Date().getTime() - lastPerformed.getTime()) / (1000 * 60 * 60 * 24);
+
+    if (daysSince >= 5) {
+      return 'recommended';
+    } else if (!step.isOptional) {
+      return 'required';
+    } else {
+      return 'optional';
+    }
+  };
 
   useEffect(() => {
     const stored = localStorage.getItem('hairCareSessions');
@@ -55,9 +77,7 @@ export default function Home() {
       alert('Please enter your username first!');
       return;
     }
-    setIsStarted(true);
-    setCurrentStepIndex(0);
-    setCurrentSession([]);
+    setShowPlanning(true);
   };
 
   const handleNext = () => {
@@ -81,6 +101,47 @@ export default function Home() {
       setCurrentStepIndex(currentStepIndex - 1);
     }
   };
+
+  if (showPlanning) {
+    return (
+      <div className="min-h-screen bg-gray-50 p-6">
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-3xl font-bold text-gray-800 mb-6">Hair Care Planning</h1>
+          <p className="text-gray-600 mb-6">Overview of all steps categorized as required, optional, or recommended.</p>
+          <div className="space-y-4">
+            {steps.map(step => {
+              const category = getStepCategory(step, sessions);
+              return (
+                <div key={step.id} className="bg-white rounded-lg shadow p-4">
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <h3 className="font-medium">{step.title}</h3>
+                      <p className="text-sm text-gray-500">{step.description}</p>
+                    </div>
+                    <span className={`px-2 py-1 rounded text-sm font-medium ${
+                      category === 'required' ? 'bg-red-100 text-red-800' :
+                      category === 'optional' ? 'bg-yellow-100 text-yellow-800' :
+                      'bg-blue-100 text-blue-800'
+                    }`}>
+                      {category}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <div className="mt-6 text-center">
+            <button
+              onClick={() => { setShowPlanning(false); setIsStarted(true); setCurrentStepIndex(0); setCurrentSession([]); }}
+              className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700"
+            >
+              Start Routine
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (!isStarted) {
     if (viewTracking) {
