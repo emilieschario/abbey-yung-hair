@@ -4,10 +4,12 @@ import { useState, useEffect, useCallback } from 'react';
 import { steps } from '../data/steps';
 import { Session, StepRecord } from '../types';
 import StepComponent from '../components/StepComponent';
+import PlanningOverview from '../components/PlanningOverview';
 
 export default function Home() {
   const [isStarted, setIsStarted] = useState(false);
   const [viewTracking, setViewTracking] = useState(false);
+  const [showPlanning, setShowPlanning] = useState(false);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [sessions, setSessions] = useState<Session[]>([]);
   const [currentSession, setCurrentSession] = useState<StepRecord[]>([]);
@@ -55,7 +57,12 @@ export default function Home() {
       alert('Please enter your username first!');
       return;
     }
+    setShowPlanning(true);
+  };
+
+  const handleProceed = () => {
     setIsStarted(true);
+    setShowPlanning(false);
     setCurrentStepIndex(0);
     setCurrentSession([]);
   };
@@ -181,6 +188,10 @@ export default function Home() {
           </div>
         </div>
       );
+    }
+
+    if (showPlanning) {
+      return <PlanningOverview sessions={sessions} onProceed={handleProceed} />;
     }
 
     return (
