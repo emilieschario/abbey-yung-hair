@@ -17,6 +17,7 @@ export interface StepRecord {
 export interface Session {
   id: string;
   date: string;
+  username: string;
   steps: StepRecord[];
 }
 

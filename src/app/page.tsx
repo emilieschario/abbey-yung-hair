@@ -7,10 +7,12 @@ import StepComponent from '../components/StepComponent';
 
 export default function Home() {
   const [isStarted, setIsStarted] = useState(false);
+  const [isPlanning, setIsPlanning] = useState(false);
   const [viewTracking, setViewTracking] = useState(false);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [sessions, setSessions] = useState<Session[]>([]);
   const [currentSession, setCurrentSession] = useState<StepRecord[]>([]);
+  const [selectedSteps, setSelectedSteps] = useState<number[]>([]);
   const [username, setUsername] = useState<string>('');
   const [usernameEntered, setUsernameEntered] = useState(false);
 
@@ -29,6 +31,31 @@ export default function Home() {
   const saveSessions = (newSessions: Session[]) => {
     setSessions(newSessions);
     localStorage.setItem('hairCareSessions', JSON.stringify(newSessions));
+  };
+
+  const getLastPerformedDate = (stepId: number): Date | null => {
+    const userSessions = sessions.filter(s => s.username === username);
+    const performedSessions = userSessions
+      .filter(s => s.steps.some(r => r.id === stepId && r.performed))
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    return performedSessions.length > 0 ? new Date(performedSessions[0].date) : null;
+  };
+
+  const categorizeSteps = () => {
+    const now = new Date();
+    return steps.map(step => {
+      const lastPerformed = getLastPerformedDate(step.id);
+      const daysSince = lastPerformed ? (now.getTime() - lastPerformed.getTime()) / (1000 * 60 * 60 * 24) : Infinity;
+      let category: 'required' | 'optional' | 'recommended';
+      if (!step.isOptional) {
+        category = 'required';
+      } else if (daysSince > 5) {
+        category = 'recommended';
+      } else {
+        category = 'optional';
+      }
+      return { ...step, category };
+    });
   };
 
   const handleUsernameSubmit = (e: React.FormEvent) => {
@@ -55,24 +82,33 @@ export default function Home() {
       alert('Please enter your username first!');
       return;
     }
+    const requiredIds = steps.filter(s => !s.isOptional).map(s => s.id);
+    setSelectedSteps(requiredIds);
+    setIsPlanning(true);
+  };
+
+  const handleStartRoutine = () => {
+    setIsPlanning(false);
     setIsStarted(true);
     setCurrentStepIndex(0);
     setCurrentSession([]);
   };
 
   const handleNext = () => {
-    if (currentStepIndex < steps.length - 1) {
+    if (currentStepIndex < selectedSteps.length - 1) {
       setCurrentStepIndex(currentStepIndex + 1);
     } else {
       // Finish - save session
       const session: Session = {
         id: Date.now().toString(),
         date: new Date().toISOString(),
+        username,
         steps: currentSession,
       };
       const newSessions = [...sessions, session];
       saveSessions(newSessions);
       setIsStarted(false);
+      setSelectedSteps([]);
     }
   };
 
@@ -82,15 +118,126 @@ export default function Home() {
     }
   };
 
+  if (isPlanning) {
+    const categorizedSteps = categorizeSteps();
+    const requiredSteps = categorizedSteps.filter(s => s.category === 'required');
+    const optionalSteps = categorizedSteps.filter(s => s.category === 'optional');
+    const recommendedSteps = categorizedSteps.filter(s => s.category === 'recommended');
+
+    return (
+      <div className="min-h-screen bg-gray-50 p-6">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 className="text-3xl font-bold text-gray-800 mb-4">Plan Your Hair Care Routine</h1>
+            <p className="text-gray-600 mb-6">
+              Select the steps you want to include in this session. Steps are categorized based on your recent activity.
+            </p>
+          </div>
+
+          <div className="space-y-6">
+            <div className="bg-white rounded-lg shadow-lg p-6">
+              <h2 className="text-xl font-semibold mb-4 text-red-600">Required Steps</h2>
+              <div className="space-y-3">
+                {requiredSteps.map(step => (
+                  <label key={step.id} className="flex items-center space-x-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                    <input
+                      type="checkbox"
+                      checked={selectedSteps.includes(step.id)}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setSelectedSteps(prev => [...prev, step.id]);
+                        } else {
+                          setSelectedSteps(prev => prev.filter(id => id !== step.id));
+                        }
+                      }}
+                      className="w-4 h-4 text-blue-600"
+                    />
+                    <div className="flex-1">
+                      <h3 className="font-medium">{step.title}</h3>
+                      <p className="text-sm text-gray-500">{step.description}</p>
+                    </div>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg shadow-lg p-6">
+              <h2 className="text-xl font-semibold mb-4 text-yellow-600">Optional Steps</h2>
+              <div className="space-y-3">
+                {optionalSteps.map(step => (
+                  <label key={step.id} className="flex items-center space-x-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                    <input
+                      type="checkbox"
+                      checked={selectedSteps.includes(step.id)}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setSelectedSteps(prev => [...prev, step.id]);
+                        } else {
+                          setSelectedSteps(prev => prev.filter(id => id !== step.id));
+                        }
+                      }}
+                      className="w-4 h-4 text-blue-600"
+                    />
+                    <div className="flex-1">
+                      <h3 className="font-medium">{step.title}</h3>
+                      <p className="text-sm text-gray-500">{step.description}</p>
+                    </div>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg shadow-lg p-6">
+              <h2 className="text-xl font-semibold mb-4 text-green-600">Recommended Steps</h2>
+              <div className="space-y-3">
+                {recommendedSteps.map(step => (
+                  <label key={step.id} className="flex items-center space-x-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                    <input
+                      type="checkbox"
+                      checked={selectedSteps.includes(step.id)}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setSelectedSteps(prev => [...prev, step.id]);
+                        } else {
+                          setSelectedSteps(prev => prev.filter(id => id !== step.id));
+                        }
+                      }}
+                      className="w-4 h-4 text-blue-600"
+                    />
+                    <div className="flex-1">
+                      <h3 className="font-medium">{step.title}</h3>
+                      <p className="text-sm text-gray-500">{step.description}</p>
+                    </div>
+                  </label>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-6 text-center">
+            <button
+              onClick={handleStartRoutine}
+              disabled={selectedSteps.length === 0}
+              className="gradient-bg text-white text-xl px-8 py-4 rounded-xl font-semibold hover:opacity-90 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Start Routine ({selectedSteps.length} steps selected)
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (!isStarted) {
     if (viewTracking) {
       // Tracking view
+      const userSessions = sessions.filter(s => s.username === username);
       const stepStats = steps.map(step => {
-        const performedCount = sessions.reduce((count, session) => {
+        const performedCount = userSessions.reduce((count, session) => {
           const record = session.steps.find(s => s.id === step.id);
           return count + (record?.performed ? 1 : 0);
         }, 0);
-        const totalSessions = sessions.length;
+        const totalSessions = userSessions.length;
         const percentage = totalSessions > 0 ? Math.round((performedCount / totalSessions) * 100) : 0;
         return { ...step, performedCount, percentage };
       });
@@ -110,7 +257,7 @@ export default function Home() {
 
             <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
               <h2 className="text-xl font-semibold mb-4">Session Summary</h2>
-              <p className="text-gray-600">Total sessions completed: {sessions.length}</p>
+              <p className="text-gray-600">Total sessions completed: {userSessions.length}</p>
             </div>
 
             <div className="bg-white rounded-lg shadow-lg p-6">
@@ -121,8 +268,8 @@ export default function Home() {
                     <div className="flex-1">
                       <h3 className="font-medium">{step.title}</h3>
                       <p className="text-sm text-gray-500">
-                        Performed {step.performedCount} out of {sessions.length} sessions ({step.percentage}%)
-                      </p>
+                         Performed {step.performedCount} out of {userSessions.length} sessions ({step.percentage}%)
+                       </p>
                     </div>
                     <div className="w-20 bg-gray-200 rounded-full h-2 ml-4">
                       <div
@@ -217,8 +364,8 @@ export default function Home() {
     );
   }
 
-  const currentStep = steps[currentStepIndex];
-  const progress = ((currentStepIndex + 1) / steps.length) * 100;
+  const currentStep = steps.find(s => s.id === selectedSteps[currentStepIndex])!;
+  const progress = ((currentStepIndex + 1) / selectedSteps.length) * 100;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -226,7 +373,7 @@ export default function Home() {
       <div className="bg-white shadow-sm">
         <div className="max-w-md mx-auto px-4 py-3">
           <div className="flex justify-between text-sm text-gray-600 mb-1">
-            <span>Step {currentStepIndex + 1} of {steps.length}</span>
+            <span>Step {currentStepIndex + 1} of {selectedSteps.length}</span>
             <span>{Math.round(progress)}% Complete</span>
           </div>
           <div className="w-full bg-gray-200 rounded-full h-2">
@@ -244,7 +391,7 @@ export default function Home() {
         onNext={handleNext}
         onPrevious={handlePrevious}
         isFirst={currentStepIndex === 0}
-        isLast={currentStepIndex === steps.length - 1}
+        isLast={currentStepIndex === selectedSteps.length - 1}
         onStepChoice={handleStepChoice}
       />
     </div>
