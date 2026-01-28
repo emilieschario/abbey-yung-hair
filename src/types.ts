@@ -1,3 +1,5 @@
+export type StepCategory = 'required' | 'optional' | 'recommended';
+
 export interface Step {
   id: number;
   title: string;
@@ -7,6 +9,10 @@ export interface Step {
   timerMinutes?: number;
   products?: string[];
   notes?: string;
+}
+
+export interface PlanningStep extends Step {
+  category: StepCategory;
 }
 
 export interface StepRecord {
@@ -31,4 +37,10 @@ export interface UserSessionRecord {
   date: string;
   stepId: number;
   performed: boolean;
+}
+
+export interface PlanningSelections {
+  userId: string;
+  date: string;
+  selectedSteps: number[];
 }

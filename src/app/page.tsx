@@ -2,8 +2,9 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { steps } from '../data/steps';
-import { Session, StepRecord } from '../types';
+import { Session, StepRecord, PlanningStep, PlanningSelections } from '../types';
 import StepComponent from '../components/StepComponent';
+import PlanningComponent from '../components/PlanningComponent';
 
 export default function Home() {
   const [isStarted, setIsStarted] = useState(false);
@@ -13,6 +14,11 @@ export default function Home() {
   const [currentSession, setCurrentSession] = useState<StepRecord[]>([]);
   const [username, setUsername] = useState<string>('');
   const [usernameEntered, setUsernameEntered] = useState(false);
+  const [isPlanning, setIsPlanning] = useState(false);
+  const [planningSteps, setPlanningSteps] = useState<PlanningStep[]>([]);
+  const [selectedStepsIds, setSelectedStepsIds] = useState<number[]>([]);
+  const [currentSelectedIndex, setCurrentSelectedIndex] = useState(0);
+  const [planningSelections, setPlanningSelections] = useState<PlanningSelections[]>([]);
 
   useEffect(() => {
     const stored = localStorage.getItem('hairCareSessions');
@@ -24,11 +30,29 @@ export default function Home() {
       setUsername(storedUsername);
       setUsernameEntered(true);
     }
+    const storedPlanning = localStorage.getItem('hairCarePlanningSelections');
+    if (storedPlanning) {
+      setPlanningSelections(JSON.parse(storedPlanning));
+    }
   }, []);
 
   const saveSessions = (newSessions: Session[]) => {
     setSessions(newSessions);
     localStorage.setItem('hairCareSessions', JSON.stringify(newSessions));
+  };
+
+  const savePlanningSelections = (newSelections: PlanningSelections[]) => {
+    setPlanningSelections(newSelections);
+    localStorage.setItem('hairCarePlanningSelections', JSON.stringify(newSelections));
+  };
+
+  const getLastPerformedDate = (stepId: number): string | null => {
+    const performedSessions = sessions.filter(session =>
+      session.steps.some(step => step.id === stepId && step.performed)
+    );
+    if (performedSessions.length === 0) return null;
+    const sorted = performedSessions.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    return sorted[0].date;
   };
 
   const handleUsernameSubmit = (e: React.FormEvent) => {
@@ -55,14 +79,36 @@ export default function Home() {
       alert('Please enter your username first!');
       return;
     }
-    setIsStarted(true);
-    setCurrentStepIndex(0);
+    setIsPlanning(true);
+    const calculatedPlanningSteps: PlanningStep[] = steps.map(step => {
+      const lastDate = getLastPerformedDate(step.id);
+      const daysSince = lastDate ? (new Date().getTime() - new Date(lastDate).getTime()) / (1000 * 60 * 60 * 24) : Infinity;
+      const category: 'required' | 'optional' | 'recommended' = !step.isOptional ? 'required' : daysSince > 2 ? 'recommended' : 'optional';
+      return { ...step, category };
+    });
+    setPlanningSteps(calculatedPlanningSteps);
+  };
+
+  const handlePlanningSubmit = (selected: number[]) => {
+    setSelectedStepsIds(selected);
+    setCurrentSelectedIndex(0);
     setCurrentSession([]);
+    setIsPlanning(false);
+    setIsStarted(true);
+    // Save planning selection
+    const today = new Date().toISOString().split('T')[0];
+    const newSelection: PlanningSelections = {
+      userId: username,
+      date: today,
+      selectedSteps: selected,
+    };
+    const newSelections = [...planningSelections, newSelection];
+    savePlanningSelections(newSelections);
   };
 
   const handleNext = () => {
-    if (currentStepIndex < steps.length - 1) {
-      setCurrentStepIndex(currentStepIndex + 1);
+    if (currentSelectedIndex < selectedStepsIds.length - 1) {
+      setCurrentSelectedIndex(currentSelectedIndex + 1);
     } else {
       // Finish - save session
       const session: Session = {
@@ -77,10 +123,14 @@ export default function Home() {
   };
 
   const handlePrevious = () => {
-    if (currentStepIndex > 0) {
-      setCurrentStepIndex(currentStepIndex - 1);
+    if (currentSelectedIndex > 0) {
+      setCurrentSelectedIndex(currentSelectedIndex - 1);
     }
   };
+
+  if (isPlanning) {
+    return <PlanningComponent planningSteps={planningSteps} onSelectionsSubmit={handlePlanningSubmit} />;
+  }
 
   if (!isStarted) {
     if (viewTracking) {
@@ -217,8 +267,8 @@ export default function Home() {
     );
   }
 
-  const currentStep = steps[currentStepIndex];
-  const progress = ((currentStepIndex + 1) / steps.length) * 100;
+  const currentStep = steps.find(s => s.id === selectedStepsIds[currentSelectedIndex]) || steps[0];
+  const progress = selectedStepsIds.length > 0 ? ((currentSelectedIndex + 1) / selectedStepsIds.length) * 100 : 0;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -226,7 +276,7 @@ export default function Home() {
       <div className="bg-white shadow-sm">
         <div className="max-w-md mx-auto px-4 py-3">
           <div className="flex justify-between text-sm text-gray-600 mb-1">
-            <span>Step {currentStepIndex + 1} of {steps.length}</span>
+            <span>Step {currentSelectedIndex + 1} of {selectedStepsIds.length}</span>
             <span>{Math.round(progress)}% Complete</span>
           </div>
           <div className="w-full bg-gray-200 rounded-full h-2">
@@ -243,8 +293,8 @@ export default function Home() {
         step={currentStep}
         onNext={handleNext}
         onPrevious={handlePrevious}
-        isFirst={currentStepIndex === 0}
-        isLast={currentStepIndex === steps.length - 1}
+        isFirst={currentSelectedIndex === 0}
+        isLast={currentSelectedIndex === selectedStepsIds.length - 1}
         onStepChoice={handleStepChoice}
       />
     </div>
