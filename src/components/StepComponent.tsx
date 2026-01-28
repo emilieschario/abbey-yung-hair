@@ -25,16 +25,9 @@ export default function StepComponent({ step, onNext, onPrevious, isFirst, isLas
       return () => clearInterval(timer);
     } else if (timeLeft === 0 && timerActive) {
       setTimerActive(false);
-      onStepChoice?.(step.id, true);
-      onNext();
     }
-  }, [timerActive, timeLeft, step.id, onStepChoice, onNext]);
+  }, [timerActive, timeLeft]);
 
-  useEffect(() => {
-    if (!step.isOptional) {
-      onStepChoice?.(step.id, true);
-    }
-  }, [step.id, step.isOptional, onStepChoice]);
 
   const startTimer = () => {
     if (step.timerMinutes) {
@@ -49,64 +42,19 @@ export default function StepComponent({ step, onNext, onPrevious, isFirst, isLas
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
-  if (step.isOptional && doStep === null) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gradient-to-br from-primary to-secondary">
-        <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-6 w-full max-w-md border border-white/20">
-          <h2 className="text-2xl font-bold mb-4 text-center text-slate-800">Step {step.id}: {step.title}</h2>
-          <p className="text-slate-600 mb-6 text-center leading-relaxed">{step.description}</p>
-          {step.notes && <p className="text-sm text-slate-500 mb-6 italic">{step.notes}</p>}
-          <div className="grid grid-cols-3 gap-3">
-            <button
-              onClick={() => {
-                setDoStep(false);
-                onStepChoice?.(step.id, false);
-              }}
-              className="bg-white/70 text-slate-700 py-3 px-4 rounded-xl font-semibold hover:bg-white transition-colors border border-slate-200"
-            >
-              Skip
-            </button>
-            <button
-              onClick={() => {
-                if (step.timerMinutes) {
-                  setDoStep(true);
-                  startTimer();
-                } else {
-                  setDoStep(true);
-                  onStepChoice?.(step.id, true);
-                }
-              }}
-              className={`gradient-bg text-white py-3 px-4 rounded-xl font-semibold hover:opacity-90 transition-colors ${step.timerMinutes ? '' : 'col-span-3'}`}
-            >
-              {step.timerMinutes ? 'Start Timer' : 'Done'}
-            </button>
-            {step.timerMinutes && (
-              <button
-                onClick={onNext}
-                className="bg-white/70 text-slate-700 py-3 px-4 rounded-xl font-semibold hover:bg-white transition-colors border border-slate-200"
-              >
-                See Next
-              </button>
-            )}
-          </div>
-        </div>
-      </div>
-    );
-  }
 
-  if (!step.isOptional || doStep) {
-    return (
-      <div className="flex flex-col min-h-screen p-4 bg-gradient-to-br from-primary to-secondary">
-        <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-6 w-full max-w-md mx-auto flex-1 border border-white/20">
-          <div className="mb-4">
-            <div className="flex justify-between items-start mb-2">
-              <h2 className="text-2xl font-bold text-slate-800">Step {step.id}</h2>
-              <span className="text-sm bg-primary/10 text-primary px-3 py-1 rounded-full font-medium">
-                {step.isOptional ? 'Optional' : 'Required'}
-              </span>
-            </div>
-            <h3 className="text-xl font-semibold text-slate-700 mb-3">{step.title}</h3>
+  return (
+    <div className="flex flex-col min-h-screen p-4 bg-gradient-to-br from-primary to-secondary">
+      <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-6 w-full max-w-md mx-auto flex-1 border border-white/20">
+        <div className="mb-4">
+          <div className="flex justify-between items-start mb-2">
+            <h2 className="text-2xl font-bold text-slate-800">Step {step.id}</h2>
+            <span className="text-sm bg-primary/10 text-primary px-3 py-1 rounded-full font-medium">
+              {step.isOptional ? 'Optional' : 'Required'}
+            </span>
           </div>
+          <h3 className="text-xl font-semibold text-slate-700 mb-3">{step.title}</h3>
+        </div>
 
           <div className="bg-white/60 rounded-xl p-4 mb-6 border border-slate-100">
             <p className="text-slate-600 mb-4 leading-relaxed">{step.description}</p>
@@ -184,57 +132,36 @@ export default function StepComponent({ step, onNext, onPrevious, isFirst, isLas
             </div>
           )}
 
-          <div className="grid grid-cols-3 gap-3 mt-auto">
-            {!isFirst && (
-              <button
-                onClick={onPrevious}
-                className="bg-white/70 text-slate-700 py-3 px-4 rounded-xl font-semibold hover:bg-white transition-colors border border-slate-200"
-              >
-                Previous
-              </button>
-            )}
+        <div className={`grid gap-3 mt-auto ${!isFirst ? 'grid-cols-3' : 'grid-cols-2'}`}>
+          {!isFirst && (
             <button
-              onClick={() => {
-                onStepChoice?.(step.id, true);
-                onNext();
-              }}
-              disabled={step.timerMinutes ? timerActive : false}
-              className={`gradient-bg text-white py-3 px-4 rounded-xl font-semibold hover:opacity-90 transition-colors ${step.timerMinutes ? '' : 'col-span-2'}`}
+              onClick={onPrevious}
+              className="bg-white/70 text-slate-700 py-3 px-4 rounded-xl font-semibold hover:bg-white transition-colors border border-slate-200"
             >
-              Done
+              Previous
             </button>
-            {!step.timerMinutes && (
-              <button
-                onClick={onNext}
-                className="bg-white/70 text-slate-700 py-3 px-4 rounded-xl font-semibold hover:bg-white transition-colors border border-slate-200"
-              >
-                See Next
-              </button>
-            )}
-          </div>
+          )}
+          <button
+            onClick={() => {
+              onStepChoice?.(step.id, true);
+              onNext();
+            }}
+            disabled={step.timerMinutes ? timerActive : false}
+            className="gradient-bg text-white py-3 px-4 rounded-xl font-semibold hover:opacity-90 transition-colors"
+          >
+            Mark Done
+          </button>
+          <button
+            onClick={() => {
+              onStepChoice?.(step.id, false);
+              onNext();
+            }}
+            className="bg-gray-500 text-white py-3 px-4 rounded-xl font-semibold hover:bg-gray-600 transition-colors"
+          >
+            Mark Not Done
+          </button>
+        </div>
         </div>
       </div>
     );
-  }
-
-  // If skipped optional step
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gradient-to-br from-primary to-secondary">
-      <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-6 w-full max-w-md border border-white/20 text-center">
-        <div className="mb-4">
-          <svg className="w-16 h-16 mx-auto mb-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
-          <h2 className="text-2xl font-bold mb-2 text-slate-800">Step {step.id} Skipped</h2>
-          <p className="text-slate-600 mb-6">You chose to skip this optional step.</p>
-        </div>
-        <button
-          onClick={onNext}
-          className="gradient-bg text-white py-3 px-6 rounded-xl font-semibold hover:opacity-90 transition-all duration-300 w-full transform hover:scale-105"
-        >
-          Continue to Next Step
-        </button>
-      </div>
-    </div>
-  );
 }

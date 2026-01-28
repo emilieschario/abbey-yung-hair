@@ -1,0 +1,82 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import { PlanningStep } from '../types';
+
+interface PlanningComponentProps {
+  planningSteps: PlanningStep[];
+  onSelectionsSubmit: (selectedSteps: number[]) => void;
+}
+
+export default function PlanningComponent({ planningSteps, onSelectionsSubmit }: PlanningComponentProps) {
+  const [selectedSteps, setSelectedSteps] = useState<number[]>([]);
+
+  useEffect(() => {
+    // Pre-select required and recommended
+    const preSelected = planningSteps
+      .filter(step => step.category === 'required' || step.category === 'recommended')
+      .map(step => step.id);
+    setSelectedSteps(preSelected);
+  }, [planningSteps]);
+
+  const toggleStep = (stepId: number) => {
+    const step = planningSteps.find(s => s.id === stepId);
+    if (step?.category === 'required') return; // Can't unselect required
+    setSelectedSteps(prev =>
+      prev.includes(stepId)
+        ? prev.filter(id => id !== stepId)
+        : [...prev, stepId]
+    );
+  };
+
+  const handleSubmit = () => {
+    onSelectionsSubmit(selectedSteps);
+  };
+
+  const groupedSteps = {
+    required: planningSteps.filter(s => s.category === 'required'),
+    recommended: planningSteps.filter(s => s.category === 'recommended'),
+    optional: planningSteps.filter(s => s.category === 'optional'),
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50 p-6">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-3xl font-bold text-gray-800 mb-6">Plan Your Hair Care Session</h1>
+        <p className="text-gray-600 mb-8">Select the steps you want to include in today's session. Required steps are pre-selected and cannot be deselected.</p>
+
+        {Object.entries(groupedSteps).map(([category, steps]) => (
+          <div key={category} className="mb-8">
+            <h2 className="text-xl font-semibold mb-4 capitalize text-gray-700">{category} Steps</h2>
+            <div className="space-y-4">
+              {steps.map(step => (
+                <div key={step.id} className="bg-white rounded-lg shadow p-4 flex items-start">
+                  <input
+                    type="checkbox"
+                    checked={selectedSteps.includes(step.id)}
+                    onChange={() => toggleStep(step.id)}
+                    disabled={step.category === 'required'}
+                    className="mt-1 mr-4"
+                  />
+                  <div className="flex-1">
+                    <h3 className="font-medium text-gray-800">{step.title}</h3>
+                    <p className="text-sm text-gray-600 mt-1">{step.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+
+        <div className="text-center">
+          <button
+            onClick={handleSubmit}
+            className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+          >
+            Start Session
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
