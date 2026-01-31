@@ -8,12 +8,10 @@ interface StepComponentProps {
   onNext: () => void;
   onPrevious: () => void;
   isFirst: boolean;
-  isLast: boolean;
   onStepChoice?: (stepId: number, performed: boolean) => void;
 }
 
-export default function StepComponent({ step, onNext, onPrevious, isFirst, isLast, onStepChoice }: StepComponentProps) {
-  const [doStep, setDoStep] = useState<boolean | null>(null);
+export default function StepComponent({ step, onNext, onPrevious, isFirst, onStepChoice }: StepComponentProps) {
   const [timerActive, setTimerActive] = useState(false);
   const [timeLeft, setTimeLeft] = useState(step.timerMinutes ? step.timerMinutes * 60 : 0);
 
