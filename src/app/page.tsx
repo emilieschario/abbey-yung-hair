@@ -146,29 +146,29 @@ export default function Home() {
 
       return (
         <div className="min-h-screen bg-gray-50 p-6">
-          <div className="max-w-2xl mx-auto">
-            <div className="flex justify-between items-center mb-6">
-              <h1 className="text-3xl font-bold text-gray-800">Hair Care Tracking</h1>
+          <div className="max-w-2xl mx-auto space-y-6">
+            <div className="flex justify-between items-center">
+              <h1 className="text-3xl font-semibold text-gray-900">Hair Care Tracking</h1>
               <button
                 onClick={() => setViewTracking(false)}
-                className="bg-gray-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-gray-600 transition-colors"
+                className="bg-white text-gray-700 px-4 py-2 rounded-lg font-semibold border border-gray-200 hover:bg-gray-100 transition-colors"
               >
                 Back
               </button>
             </div>
 
-            <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-              <h2 className="text-xl font-semibold mb-4">Session Summary</h2>
+            <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
+              <h2 className="text-xl font-semibold mb-2 text-gray-900">Session Summary</h2>
               <p className="text-gray-600">Total sessions completed: {sessions.length}</p>
             </div>
 
-            <div className="bg-white rounded-lg shadow-lg p-6">
-              <h2 className="text-xl font-semibold mb-4">Step Performance</h2>
+            <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
+              <h2 className="text-xl font-semibold mb-4 text-gray-900">Step Performance</h2>
               <div className="space-y-4">
                 {stepStats.map(step => (
-                  <div key={step.id} className="flex items-center justify-between p-4 border rounded-lg">
+                  <div key={step.id} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
                     <div className="flex-1">
-                      <h3 className="font-medium">{step.title}</h3>
+                      <h3 className="font-medium text-gray-900">{step.title}</h3>
                       <p className="text-sm text-gray-500">
                         Performed {step.performedCount} out of {sessions.length} sessions ({step.percentage}%)
                       </p>
@@ -190,12 +190,12 @@ export default function Home() {
 
     if (!usernameEntered) {
       return (
-        <div className="min-h-screen bg-gradient-to-br from-primary to-secondary flex flex-col items-center justify-center p-6">
-          <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl max-w-lg w-full p-8 text-center border border-white/20">
-            <h1 className="text-4xl font-bold text-slate-800 mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+        <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-6">
+          <div className="bg-white rounded-lg shadow-sm max-w-lg w-full p-8 text-center border border-gray-200">
+            <h1 className="text-3xl font-semibold text-gray-900 mb-4">
               Abbey Yung Hair Method
             </h1>
-            <p className="text-slate-600 text-lg mb-8 leading-relaxed">
+            <p className="text-gray-600 text-base mb-8 leading-relaxed">
               Transform your hair care routine with this comprehensive 21-step method.
               Get glowing, healthy hair with expert recommendations and guided steps.
             </p>
@@ -207,24 +207,19 @@ export default function Home() {
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     placeholder="Enter your username"
-                    className="w-full px-6 py-4 bg-white/80 border border-slate-200 rounded-xl focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all duration-300 text-lg"
+                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-200 focus:border-blue-500 transition-colors"
                     required
                   />
-                  <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
-                    <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                    </svg>
-                  </div>
                 </div>
                 <button
                   type="submit"
-                  className="gradient-bg text-white text-xl px-8 py-4 rounded-xl font-semibold hover:opacity-90 transition-all duration-300 w-full transform hover:scale-105"
+                  className="bg-blue-600 text-white text-base px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors w-full"
                 >
                   Continue
                 </button>
               </form>
             </div>
-            <div className="mt-8 text-slate-500 text-sm">
+            <div className="mt-6 text-gray-500 text-sm">
               Follow the steps for salon-quality results at home!
             </div>
           </div>
@@ -233,32 +228,32 @@ export default function Home() {
     }
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-primary to-secondary flex flex-col items-center justify-center p-6">
-        <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl max-w-lg w-full p-8 text-center border border-white/20">
-          <h1 className="text-4xl font-bold text-slate-800 mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+      <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-6">
+        <div className="bg-white rounded-lg shadow-sm max-w-lg w-full p-8 text-center border border-gray-200">
+          <h1 className="text-3xl font-semibold text-gray-900 mb-4">
             Abbey Yung Hair Method
           </h1>
-          <p className="text-slate-600 text-lg mb-8 leading-relaxed">
+          <p className="text-gray-600 text-base mb-8 leading-relaxed">
             Transform your hair care routine with this comprehensive 21-step method.
             Get glowing, healthy hair with expert recommendations and guided steps.
           </p>
           <div className="space-y-4">
             <button
               onClick={handleStart}
-              className="gradient-bg text-white text-xl px-8 py-4 rounded-xl font-semibold hover:opacity-90 transition-all duration-300 w-full transform hover:scale-105"
+              className="bg-blue-600 text-white text-base px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors w-full"
             >
               Get Started
             </button>
             {sessions.length > 0 && (
               <button
                 onClick={() => setViewTracking(true)}
-                className="bg-green-500 text-white text-lg px-6 py-3 rounded-xl font-semibold hover:bg-green-600 transition-colors w-full"
+                className="bg-white text-gray-700 text-base px-6 py-3 rounded-lg font-semibold border border-gray-200 hover:bg-gray-100 transition-colors w-full"
               >
                 View Tracking ({sessions.length} sessions)
               </button>
             )}
           </div>
-          <div className="mt-6 text-slate-500 text-sm">
+          <div className="mt-6 text-gray-500 text-sm">
             Welcome, {username}! Follow the steps for salon-quality results at home!
           </div>
         </div>
@@ -272,7 +267,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Progress Bar */}
-      <div className="bg-white shadow-sm">
+      <div className="bg-white border-b border-gray-200">
         <div className="max-w-md mx-auto px-4 py-3">
           <div className="flex justify-between text-sm text-gray-600 mb-1">
             <span>Step {currentSelectedIndex + 1} of {selectedStepsIds.length}</span>
