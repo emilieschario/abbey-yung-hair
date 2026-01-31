@@ -9,7 +9,6 @@ import PlanningComponent from '../components/PlanningComponent';
 export default function Home() {
   const [isStarted, setIsStarted] = useState(false);
   const [viewTracking, setViewTracking] = useState(false);
-  const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [sessions, setSessions] = useState<Session[]>([]);
   const [currentSession, setCurrentSession] = useState<StepRecord[]>([]);
   const [username, setUsername] = useState<string>('');
@@ -294,7 +293,6 @@ export default function Home() {
         onNext={handleNext}
         onPrevious={handlePrevious}
         isFirst={currentSelectedIndex === 0}
-        isLast={currentSelectedIndex === selectedStepsIds.length - 1}
         onStepChoice={handleStepChoice}
       />
     </div>

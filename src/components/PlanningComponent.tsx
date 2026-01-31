@@ -43,7 +43,9 @@ export default function PlanningComponent({ planningSteps, onSelectionsSubmit }:
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold text-gray-800 mb-6">Plan Your Hair Care Session</h1>
-        <p className="text-gray-600 mb-8">Select the steps you want to include in today's session. Required steps are pre-selected and cannot be deselected.</p>
+        <p className="text-gray-600 mb-8">
+          Select the steps you want to include in {"today's"} session. Required steps are pre-selected and cannot be deselected.
+        </p>
 
         {Object.entries(groupedSteps).map(([category, steps]) => (
           <div key={category} className="mb-8">
