@@ -41,30 +41,32 @@ export default function PlanningComponent({ planningSteps, onSelectionsSubmit }:
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-800 mb-6">Plan Your Hair Care Session</h1>
-        <p className="text-gray-600 mb-8">
-          Select the steps you want to include in {"today's"} session. Required steps are pre-selected and cannot be deselected.
-        </p>
+      <div className="max-w-4xl mx-auto space-y-6">
+        <div>
+          <h1 className="text-3xl font-semibold text-gray-900">Plan Your Hair Care Session</h1>
+          <p className="text-gray-600 mt-2">
+            Select the steps you want to include in {"today's"} session. Required steps are pre-selected and cannot be deselected.
+          </p>
+        </div>
 
         {Object.entries(groupedSteps).map(([category, steps]) => (
-          <div key={category} className="mb-8">
-            <h2 className="text-xl font-semibold mb-4 capitalize text-gray-700">{category} Steps</h2>
-            <div className="space-y-4">
+          <div key={category} className="space-y-4">
+            <h2 className="text-lg font-semibold capitalize text-gray-800">{category} Steps</h2>
+            <div className="space-y-3">
               {steps.map(step => (
-                <div key={step.id} className="bg-white rounded-lg shadow p-4 flex items-start">
+                <label key={step.id} className="bg-white rounded-lg border border-gray-200 p-4 flex items-start gap-4">
                   <input
                     type="checkbox"
                     checked={selectedSteps.includes(step.id)}
                     onChange={() => toggleStep(step.id)}
                     disabled={step.category === 'required'}
-                    className="mt-1 mr-4"
+                    className="mt-1"
                   />
                   <div className="flex-1">
-                    <h3 className="font-medium text-gray-800">{step.title}</h3>
+                    <h3 className="font-medium text-gray-900">{step.title}</h3>
                     <p className="text-sm text-gray-600 mt-1">{step.description}</p>
                   </div>
-                </div>
+                </label>
               ))}
             </div>
           </div>
@@ -73,7 +75,7 @@ export default function PlanningComponent({ planningSteps, onSelectionsSubmit }:
         <div className="text-center">
           <button
             onClick={handleSubmit}
-            className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+            className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
           >
             Start Session
           </button>
