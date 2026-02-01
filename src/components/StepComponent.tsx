@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Step } from '../types';
+import { Step, PlanningStep } from '../types';
 
 interface StepComponentProps {
   step: Step;
@@ -9,6 +9,7 @@ interface StepComponentProps {
   onPrevious: () => void;
   isFirst: boolean;
   onStepChoice?: (stepId: number, performed: boolean) => void;
+  planningSteps?: PlanningStep[];
 }
 
 export default function StepComponent({ step, onNext, onPrevious, isFirst, onStepChoice }: StepComponentProps) {
@@ -86,6 +87,26 @@ export default function StepComponent({ step, onNext, onPrevious, isFirst, onSte
           {step.notes && (
             <div className="mt-4 p-3 bg-white rounded-lg border border-gray-200">
               <p className="text-sm text-gray-600 italic">{step.notes}</p>
+            </div>
+          )}
+
+          {planningSteps && step.id === 0 && (
+            <div className="mt-4">
+              <h4 className="font-semibold mb-2 text-gray-800">Overview of All Steps</h4>
+              {Object.entries({
+                required: planningSteps.filter(s => s.category === 'required'),
+                recommended: planningSteps.filter(s => s.category === 'recommended'),
+                optional: planningSteps.filter(s => s.category === 'optional'),
+              }).map(([category, steps]) => (
+                <div key={category} className="mb-4">
+                  <h5 className="font-medium capitalize text-gray-700">{category} Steps</h5>
+                  <ul className="ml-4 space-y-1">
+                    {steps.map(s => (
+                      <li key={s.id} className="text-gray-600 list-disc">{s.title}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
             </div>
           )}
         </div>

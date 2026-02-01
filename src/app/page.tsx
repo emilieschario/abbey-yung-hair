@@ -289,6 +289,7 @@ export default function Home() {
         onPrevious={handlePrevious}
         isFirst={currentSelectedIndex === 0}
         onStepChoice={handleStepChoice}
+        planningSteps={currentStep.id === 0 ? planningSteps : undefined}
       />
     </div>
   );
