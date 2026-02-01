@@ -9,9 +9,10 @@ interface StepComponentProps {
   onPrevious: () => void;
   isFirst: boolean;
   onStepChoice?: (stepId: number, performed: boolean) => void;
+  planningOverview?: import('../types').PlanningStep[];
 }
 
-export default function StepComponent({ step, onNext, onPrevious, isFirst, onStepChoice }: StepComponentProps) {
+export default function StepComponent({ step, onNext, onPrevious, isFirst, onStepChoice, planningOverview }: StepComponentProps) {
   const [timerActive, setTimerActive] = useState(false);
   const [timeLeft, setTimeLeft] = useState(step.timerMinutes ? step.timerMinutes * 60 : 0);
 
@@ -40,6 +41,79 @@ export default function StepComponent({ step, onNext, onPrevious, isFirst, onSte
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
+
+  const groupedSteps: Record<string, import('../types').PlanningStep[]> = planningOverview ? {
+    required: planningOverview.filter(s => s.category === 'required'),
+    recommended: planningOverview.filter(s => s.category === 'recommended'),
+    optional: planningOverview.filter(s => s.category === 'optional'),
+  } : {};
+
+  if (step.id === 0 && planningOverview) {
+    return (
+      <div className="flex flex-col min-h-screen p-6 bg-gray-50">
+        <div className="bg-white rounded-lg shadow-sm p-6 w-full max-w-md mx-auto flex-1 border border-gray-200">
+          <div className="mb-4">
+            <div className="flex justify-between items-start mb-2">
+              <h2 className="text-2xl font-semibold text-gray-900">Step {step.id}</h2>
+              <span className="text-xs bg-gray-100 text-gray-700 px-3 py-1 rounded-full font-medium border border-gray-200">
+                {step.isOptional ? 'Optional' : 'Required'}
+              </span>
+            </div>
+            <h3 className="text-lg font-semibold text-gray-800">{step.title}</h3>
+          </div>
+
+          <div className="bg-gray-50 rounded-lg p-4 mb-6 border border-gray-200">
+            <p className="text-gray-600 mb-4 leading-relaxed">{step.description}</p>
+
+            {/* Overview of all 20 steps */}
+            <div className="space-y-4">
+              {Object.entries(groupedSteps).map(([category, steps]) => (
+                <div key={category} className="space-y-2">
+                  <h4 className="font-semibold capitalize text-gray-800">{category} Steps</h4>
+                  <div className="space-y-1">
+                    {steps.map(s => (
+                      <div key={s.id} className="text-gray-600 text-sm">
+                        {s.title}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className={`grid gap-3 mt-auto ${!isFirst ? 'grid-cols-3' : 'grid-cols-2'}`}>
+            {!isFirst && (
+              <button
+                onClick={onPrevious}
+                className="bg-white text-gray-700 py-3 px-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors border border-gray-200"
+              >
+                Previous
+              </button>
+            )}
+            <button
+              onClick={() => {
+                onStepChoice?.(step.id, true);
+                onNext();
+              }}
+              className="bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+            >
+              Mark Done
+            </button>
+            <button
+              onClick={() => {
+                onStepChoice?.(step.id, false);
+                onNext();
+              }}
+              className="bg-white text-gray-700 py-3 px-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors border border-gray-200"
+            >
+              Mark Not Done
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col min-h-screen p-6 bg-gray-50">
