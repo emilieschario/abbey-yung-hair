@@ -33,7 +33,7 @@ export const steps: Step[] = [
     description: 'Clarifying shampoos are designed to deep-clean your hair and scalp, removing product buildup, excess oils, and impurities that regular shampoos may leave behind.',
     isOptional: true,
     actions: ['Wet hair thoroughly', 'Apply clarifying shampoo and massage into scalp', 'Rinse thoroughly'],
-    products: ['L\'Oréal EverPure Sulfate-Free Clarifying Shampoo', 'Garnier Fructis Pure Clean Silicone-Free Purifying Shampoo', 'Dove Scalp + Hair Therapy Clarifying Shampoo', 'Pantene Pro-V Volume & Body Shampoo', 'L\'Oréal Professionnel Metal Detox Shampoo', 'Living Proof Clarifying Detox Shampoo', 'K18 Peptide Prep Shampoo', 'OUAI Detox Shampoo'],
+    products: ['L'Oreal Ever Pure Clarify Shampoo in the blue bottle', 'Garnier Fructis Pure Clean Silicone-Free Purifying Shampoo', 'Dove Scalp + Hair Therapy Clarifying Shampoo', 'Pantene Pro-V Volume & Body Shampoo', 'L\'Oréal Professionnel Metal Detox Shampoo', 'Living Proof Clarifying Detox Shampoo', 'K18 Peptide Prep Shampoo', 'OUAI Detox Shampoo'],
     notes: 'Use at least once a week, or more frequently if needed based on your hair and scalp condition.',
   },
   {
@@ -42,7 +42,7 @@ export const steps: Step[] = [
     description: 'This is your regular, everyday shampoo for wash days when you don\'t need a deep clarifying cleanse. These formulas are typically gentler and often include bond-repairing or strengthening ingredients.',
     isOptional: false,
     actions: ['Wet hair thoroughly', 'Apply shampoo and massage into scalp', 'Rinse thoroughly'],
-    products: ['Garnier Fructis Hair Filler + Vitamin Cg Strength Repair Shampoo (sulfate-free)', 'Not Your Mother\'s Tough Love Bonding Shampoo', 'Dove Intensive Repair Shampoo', 'Dove Bond Strength Shampoo', 'L\'Oréal EverPure Sulfate-Free Bond Repair Shampoo', 'Pureology Strength Cure Shampoo', 'Amika The Kure Bond Repair Shampoo', 'Redken Acidic Bonding Concentrate Shampoo'],
+    products: ['Garnier Fructis Hair Filler + Vitamin Cg Strength Repair Shampoo (sulfate-free)', 'Not Your Mother\'s Tough Love Bonding Shampoo', 'Dove Intensive Repair Shampoo', 'Dove Bond Strength Shampoo', 'L'Oreal Ever Pure Bond Repair Shampoo in the pink bottle', 'Pureology Strength Cure Shampoo', 'Amika The Kure Bond Repair Shampoo', 'Redken Acidic Bonding Concentrate Shampoo'],
     notes: 'Use as many times per week as needed for your hair type.',
   },
   {
@@ -69,7 +69,7 @@ export const steps: Step[] = [
     description: 'Step 6 is broken into three parts—glosses, conditioners, and hair masks—giving you flexibility to mix and match based on your hair\'s needs.',
     isOptional: false,
     actions: ['Use at least one conditioning product (whether it\'s a gloss, conditioner, or mask) every time you wash your hair', 'If needed, you can layer multiple products in the same wash session, such as gloss + conditioner, gloss + mask, or conditioner + mask'],
-    products: ['Glosses: L\'Oréal Elvive 8 Second Wonder Water Hyaluron + Plump Lamellar Rinse Out, L\'Oréal EverPure Sulfate-Free Glossing 5-Min Lamination Mask, Amika Flash Instant Shine Mask, L\'Oréal Elvive Glycolic Gloss 5 Minute Lamination Rinse-Off', 'Conditioners: Garnier Fructis Hair Filler + Vitamin Cg Strength Repair Conditioner (sulfate-free), Not Your Mother\'s Tough Love Bonding Conditioner, Dove Intensive Repair Conditioner, Dove Bond Strength Conditioner, L\'Oréal EverPure Sulfate-Free Bond Repair Conditioner, Pureology Strength Cure Conditioner, Amika The Kure Bond Repair Conditioner, Redken Acidic Bonding Concentrate Conditioner', 'Hair Masks: Elizavecca CER-100 Collagen Ceramide Coating Protein Treatment, Pantene Miracle Rescue Deep Repair Conditioner (with melting Pro-V Pearls), Pantene Miracle Rescue Intensive Bond Repair Mask, OGX Bond Protein Repair 3-Minute Treatment Mask, Dove 10-in-1 Serum Mask Intensive Repair, Dove 10-in-1 Serum Mask Bond Strength, Amika The Kure Intense Repair Mask'],
+    products: ['Glosses: L'Oréal Elvive 8 Second Wonder Water Hyaluron + Plump Lamellar Rinse Out OR L'Oréal EverPure Sulfate-Free Glossing 5-Min Lamination Mask', 'Conditioners: Garnier Fructis Hair Filler + Vitamin Cg Strength Repair Conditioner (sulfate-free), Not Your Mother\'s Tough Love Bonding Conditioner, Dove Intensive Repair Conditioner, Dove Bond Strength Conditioner, L'Oreal Ever Pure Bond Repair Conditioner in the pink bottle, Pureology Strength Cure Conditioner, Amika The Kure Bond Repair Conditioner, Redken Acidic Bonding Concentrate Conditioner', 'Hair Masks: Elizavecca CER-100 Collagen Ceramide Coating Protein Treatment, Pantene Miracle Rescue Deep Repair Conditioner (with melting Pro-V Pearls), Pantene Miracle Rescue Intensive Bond Repair Mask, OGX Bond Protein Repair 3-Minute Treatment Mask, Dove 10-in-1 Serum Mask Intensive Repair, Dove 10-in-1 Serum Mask Bond Strength, Amika The Kure Intense Repair Mask'],
     notes: 'Glosses add shine and help seal the hair cuticle for a smooth, polished finish. Conditioners provide everyday hydration. Hair masks offer deeper conditioning and intensive repair.',
   },
   {
@@ -78,7 +78,7 @@ export const steps: Step[] = [
     description: 'This essential step provides ongoing hydration and protects your hair from heat damage during styling. These products serve double duty as both leave-in conditioners and heat protectants.',
     isOptional: false,
     actions: ['Apply liberally to damp hair post-wash'],
-    products: ['Pantene Miracle Rescue 10-in-1 Multitasking Spray (with keratin)', 'TRESemmé Protecting Heat Styling Spray', 'TRESemmé Keratin Smooth Blowout Heat Protect Spray', 'Not Your Mother\'s Tough Love Bonding Leave-In Protector', 'OGX Bond Protein Repair Leave-In Heat Protectant', 'L\'Oréal EverPure Sulfate-Free Moisture 21-in-1 Spray', 'Redken One United 25 Benefits All-In-One Multi-Benefit Treatment', 'Pureology Color Fanatic 21 Essential Benefits Primer', 'Bumble and Bumble Hairdresser\'s Invisible Oil'],
+    products: ['Pantene Miracle Rescue 10-in-1 Multitasking Spray (with keratin)', 'TRESemmé Protecting Heat Styling Spray', 'TRESemmé Keratin Smooth Blowout Heat Protect Spray', 'Not Your Mother\'s Tough Love Bonding Leave-In Protector', 'OGX Bond Protein Repair', 'L\'Oréal EverPure Sulfate-Free Moisture 21-in-1 Spray', 'Redken One United 25 Benefits All-In-One Multi-Benefit Treatment', 'Pureology Color Fanatic 21 Essential Benefits Primer', 'Bumble and Bumble Hairdresser\'s Invisible Oil'],
     notes: 'Apply every wash day.',
   },
   {
