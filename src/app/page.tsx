@@ -82,7 +82,7 @@ export default function Home() {
     const calculatedPlanningSteps: PlanningStep[] = steps.map(step => {
       const lastDate = getLastPerformedDate(step.id);
       const daysSince = lastDate ? (new Date().getTime() - new Date(lastDate).getTime()) / (1000 * 60 * 60 * 24) : Infinity;
-      const category: 'required' | 'optional' | 'recommended' = !step.isOptional ? 'required' : daysSince > 2 ? 'recommended' : 'optional';
+      const category: 'required' | 'optional' | 'recommended' = !step.isOptional ? 'required' : (daysSince > 0 && daysSince <= 2) ? 'recommended' : 'optional';
       return { ...step, category };
     });
     setPlanningSteps(calculatedPlanningSteps);
@@ -289,6 +289,7 @@ export default function Home() {
         onPrevious={handlePrevious}
         isFirst={currentSelectedIndex === 0}
         onStepChoice={handleStepChoice}
+        planningOverview={currentStep.id === 0 ? planningSteps : undefined}
       />
     </div>
   );
