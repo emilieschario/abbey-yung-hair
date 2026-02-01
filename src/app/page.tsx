@@ -82,13 +82,17 @@ export default function Home() {
     const calculatedPlanningSteps: PlanningStep[] = steps.map(step => {
       const lastDate = getLastPerformedDate(step.id);
       const daysSince = lastDate ? (new Date().getTime() - new Date(lastDate).getTime()) / (1000 * 60 * 60 * 24) : Infinity;
+      const RECENT_DAYS_THRESHOLD = 2;
       // Category logic:
       // - required: non-optional steps
-      // - recommended: optional steps that are overdue / haven't been done recently (or never performed)
-      // - optional: optional steps that were performed recently
-      const RECENT_DAYS_THRESHOLD = 2;
+      // - recommended: optional steps performed recently (within threshold)
+      // - optional: optional steps not performed recently, including never performed (daysSince = Infinity)
       const category: 'required' | 'optional' | 'recommended' =
-        !step.isOptional ? 'required' : daysSince > RECENT_DAYS_THRESHOLD ? 'recommended' : 'optional';
+        !step.isOptional
+          ? 'required'
+          : (daysSince > 0 && daysSince <= RECENT_DAYS_THRESHOLD)
+            ? 'recommended'
+            : 'optional';
       return { ...step, category };
     });
     setPlanningSteps(calculatedPlanningSteps);
