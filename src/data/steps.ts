@@ -2,13 +2,6 @@ import { Step } from '../types';
 
 export const steps: Step[] = [
   {
-    id: 0,
-    title: 'Planning Your Hair Care Routine',
-    description: 'Before starting your hair care routine, take a moment to assess your hair\'s current condition and plan the steps you\'ll take.',
-    isOptional: false,
-    actions: ['Assess your hair type, texture, and any specific concerns', 'Review the available steps and select those that match your needs', 'Gather all necessary products before beginning'],
-  },
-  {
     id: 1,
     title: 'Pre-Shampoo Bond Repair Treatment',
     description: 'This is an optional first step in your hair care routine, designed to repair and strengthen hair bonds before cleansing.',
