@@ -13,6 +13,7 @@ export default function Home() {
   const [currentSession, setCurrentSession] = useState<StepRecord[]>([]);
   const [username, setUsername] = useState<string>('');
   const [usernameEntered, setUsernameEntered] = useState(false);
+  const [isReturningUser, setIsReturningUser] = useState(false);
   const [isPlanning, setIsPlanning] = useState(false);
   const [planningSteps, setPlanningSteps] = useState<PlanningStep[]>([]);
   const [selectedStepsIds, setSelectedStepsIds] = useState<number[]>([]);
@@ -28,6 +29,7 @@ export default function Home() {
     if (storedUsername) {
       setUsername(storedUsername);
       setUsernameEntered(true);
+      setIsReturningUser(true);
     }
     const storedPlanning = localStorage.getItem('hairCarePlanningSelections');
     if (storedPlanning) {
@@ -138,7 +140,7 @@ export default function Home() {
   };
 
   if (isPlanning) {
-    return <PlanningComponent planningSteps={planningSteps} onSelectionsSubmit={handlePlanningSubmit} />;
+    return <PlanningComponent planningSteps={planningSteps} onSelectionsSubmit={handlePlanningSubmit} username={username} isReturningUser={isReturningUser} />;
   }
 
   if (!isStarted) {
@@ -185,7 +187,7 @@ export default function Home() {
                     </div>
                     <div className="w-20 bg-gray-200 rounded-full h-2 ml-4">
                       <div
-                        className="bg-blue-600 h-2 rounded-full"
+                        className="bg-green-600 h-2 rounded-full"
                         style={{ width: `${step.percentage}%` }}
                       ></div>
                     </div>
@@ -216,17 +218,17 @@ export default function Home() {
                     type="text"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && username.trim()) {
+                        handleUsernameSubmit(e);
+                      }
+                    }}
                     placeholder="Enter your username"
-                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-200 focus:border-blue-500 transition-colors"
+                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-200 focus:border-green-500 transition-colors"
                     required
+                    autoFocus
                   />
                 </div>
-                <button
-                  type="submit"
-                  className="bg-blue-600 text-white text-base px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors w-full"
-                >
-                  Continue
-                </button>
               </form>
             </div>
             <div className="mt-6 text-gray-500 text-sm">
@@ -250,7 +252,7 @@ export default function Home() {
           <div className="space-y-4">
             <button
               onClick={handleStart}
-              className="bg-blue-600 text-white text-base px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors w-full"
+              className="bg-green-600 text-white text-base px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors w-full"
             >
               Get Started
             </button>
@@ -285,7 +287,7 @@ export default function Home() {
           </div>
           <div className="w-full bg-gray-200 rounded-full h-2">
             <div
-              className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+              className="bg-green-600 h-2 rounded-full transition-all duration-300"
               style={{ width: `${progress}%` }}
             ></div>
           </div>
@@ -299,7 +301,6 @@ export default function Home() {
         onPrevious={handlePrevious}
         isFirst={currentSelectedIndex === 0}
         onStepChoice={handleStepChoice}
-        planningOverview={currentStep.id === 0 ? planningSteps : undefined}
       />
     </div>
   );
