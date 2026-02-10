@@ -27,6 +27,7 @@ export const steps: Step[] = [
     isOptional: true,
     actions: ['Wet hair thoroughly', 'Apply clarifying shampoo and massage into scalp', 'Rinse thoroughly'],
     products: ['L\'Oreal Ever Pure Clarify Shampoo in the blue bottle', 'Garnier Fructis Pure Clean Silicone-Free Purifying Shampoo', 'Dove Scalp + Hair Therapy Clarifying Shampoo', 'Pantene Pro-V Volume & Body Shampoo', 'L\'Oréal Professionnel Metal Detox Shampoo', 'Living Proof Clarifying Detox Shampoo', 'K18 Peptide Prep Shampoo', 'OUAI Detox Shampoo'],
+    preferredProduct: 'L\'Oréal everpure clarifying shampoo',
     notes: 'Use at least once a week, or more frequently if needed based on your hair and scalp condition.',
   },
   {

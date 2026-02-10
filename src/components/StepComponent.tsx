@@ -131,6 +131,13 @@ export default function StepComponent({ step, onNext, onPrevious, isFirst, onSte
         <div className="bg-gray-50 rounded-lg p-4 mb-6 border border-gray-200">
           <p className="text-gray-600 mb-4 leading-relaxed">{step.description}</p>
 
+          {step.preferredProduct && (
+            <div className="mb-4 p-3 bg-green-50 rounded-lg border border-green-200">
+              <h4 className="font-semibold mb-1 text-gray-800">Preferred Product</h4>
+              <p className="text-gray-700">{step.preferredProduct}</p>
+            </div>
+          )}
+
           {step.actions.length > 0 && (
             <div className="mb-4">
               <h4 className="font-semibold mb-2 text-gray-800">Actions</h4>
