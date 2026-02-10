@@ -96,7 +96,7 @@ export default function StepComponent({ step, onNext, onPrevious, isFirst, onSte
                 onStepChoice?.(step.id, true);
                 onNext();
               }}
-              className="bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+              className="bg-green-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-green-700 transition-colors"
             >
               Mark Done
             </button>
@@ -167,7 +167,7 @@ export default function StepComponent({ step, onNext, onPrevious, isFirst, onSte
         {step.timerMinutes && !timerActive && (
           <button
             onClick={startTimer}
-            className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors mb-4"
+            className="w-full bg-green-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-green-700 transition-colors mb-4"
           >
             Start {step.timerMinutes} Minute Timer
           </button>
@@ -180,7 +180,7 @@ export default function StepComponent({ step, onNext, onPrevious, isFirst, onSte
             </div>
             <div className="w-full bg-gray-200 rounded-full h-3">
               <div
-                className="bg-blue-600 h-3 rounded-full transition-all duration-1000"
+                className="bg-green-600 h-3 rounded-full transition-all duration-1000"
                 style={{ width: `${((step.timerMinutes! * 60 - timeLeft) / (step.timerMinutes! * 60)) * 100}%` }}
               ></div>
             </div>
@@ -202,7 +202,7 @@ export default function StepComponent({ step, onNext, onPrevious, isFirst, onSte
               onNext();
             }}
             disabled={step.timerMinutes ? timerActive : false}
-            className="bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+            className="bg-green-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-green-700 transition-colors"
           >
             Mark Done
           </button>

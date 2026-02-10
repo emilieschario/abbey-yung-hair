@@ -101,11 +101,11 @@ body {
 .text-slate-700 { color: #334155; }
 .text-slate-800 { color: #1e293b; }
 .text-white { color: white; }
-.text-blue-600 { color: #2563eb; }
+.text-blue-600 { color: #16a34a; }
 .text-green-500 { color: #10b981; }
 .bg-gray-200 { background-color: #e5e7eb; }
 .bg-gray-500 { background-color: #6b7280; }
-.bg-blue-600 { background-color: #2563eb; }
+.bg-blue-600 { background-color: #16a34a; }
 .bg-green-500 { background-color: #22c55e; }
 .rounded-lg { border-radius: 0.5rem; }
 .rounded-xl { border-radius: 0.75rem; }
@@ -126,7 +126,7 @@ body {
 .text-primary { color: var(--primary); }
 .hover\:bg-white:hover { background-color: white; }
 .hover\:bg-gray-600:hover { background-color: #4b5563; }
-.hover\:bg-blue-700:hover { background-color: #1d4ed8; }
+.hover\:bg-blue-700:hover { background-color: #15803d; }
 .hover\:bg-green-600:hover { background-color: #16a34a; }
 .hover\:opacity-90:hover { opacity: 0.9; }
 .hover\:scale-105:hover { transform: scale(1.05); }

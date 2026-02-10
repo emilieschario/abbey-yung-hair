@@ -6,9 +6,11 @@ import { PlanningStep } from '../types';
 interface PlanningComponentProps {
   planningSteps: PlanningStep[];
   onSelectionsSubmit: (selectedSteps: number[]) => void;
+  username: string;
+  isReturningUser: boolean;
 }
 
-export default function PlanningComponent({ planningSteps, onSelectionsSubmit }: PlanningComponentProps) {
+export default function PlanningComponent({ planningSteps, onSelectionsSubmit, username, isReturningUser }: PlanningComponentProps) {
   const [selectedSteps, setSelectedSteps] = useState<number[]>([]);
 
   useEffect(() => {
@@ -39,11 +41,19 @@ export default function PlanningComponent({ planningSteps, onSelectionsSubmit }:
     optional: planningSteps.filter(s => s.category === 'optional'),
   };
 
+  const categoryLabels: Record<string, string> = {
+    required: 'Required steps',
+    recommended: 'Recommended steps',
+    optional: 'Optional steps',
+  };
+
+  const greeting = isReturningUser ? `Welcome back, ${username}!` : `Welcome, ${username}!`;
+
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-4xl mx-auto space-y-6">
         <div>
-          <h1 className="text-3xl font-semibold text-gray-900">Plan Your Hair Care Session</h1>
+          <h1 className="text-3xl font-semibold text-gray-900">{greeting}</h1>
           <p className="text-gray-600 mt-2">
             Select the steps you want to include in {"today's"} session. Required steps are pre-selected and cannot be deselected.
           </p>
@@ -51,7 +61,7 @@ export default function PlanningComponent({ planningSteps, onSelectionsSubmit }:
 
         {Object.entries(groupedSteps).map(([category, steps]) => (
           <div key={category} className="space-y-4">
-            <h2 className="text-lg font-semibold capitalize text-gray-800">{category} Steps</h2>
+            <h2 className="text-lg font-semibold text-gray-800">{categoryLabels[category]}</h2>
             <div className="space-y-3">
               {steps.map(step => (
                 <label key={step.id} className="bg-white rounded-lg border border-gray-200 p-4 flex items-start gap-4">
@@ -75,9 +85,9 @@ export default function PlanningComponent({ planningSteps, onSelectionsSubmit }:
         <div className="text-center">
           <button
             onClick={handleSubmit}
-            className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+            className="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors"
           >
-            Start Session
+            Start session
           </button>
         </div>
       </div>
