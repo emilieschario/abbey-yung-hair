@@ -26,7 +26,7 @@ export const steps: Step[] = [
     description: 'Clarifying shampoos are designed to deep-clean your hair and scalp, removing product buildup, excess oils, and impurities that regular shampoos may leave behind.',
     isOptional: true,
     actions: ['Wet hair thoroughly', 'Apply clarifying shampoo and massage into scalp', 'Rinse thoroughly'],
-    products: ['L\'Oreal Paris EverPure Clarify Shampoo for Build Up', 'Garnier Fructis Pure Clean Silicone-Free Purifying Shampoo', 'Dove Scalp + Hair Therapy Clarifying Shampoo', 'Pantene Pro-V Volume & Body Shampoo', 'L\'Oréal Professionnel Metal Detox Shampoo', 'Living Proof Clarifying Detox Shampoo', 'K18 Peptide Prep Shampoo', 'OUAI Detox Shampoo'],
+    products: ['L\'Oreal Paris EverPure Clarify Shampoo for Build Up'],
     notes: 'Use at least once a week, or more frequently if needed based on your hair and scalp condition.',
   },
   {

@@ -8,6 +8,7 @@ export interface Step {
   actions: string[];
   timerMinutes?: number;
   products?: string[];
+  preferredProduct?: string;
   notes?: string;
 }
 
