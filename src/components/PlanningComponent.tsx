@@ -93,9 +93,9 @@ export default function PlanningComponent({ planningSteps, onSelectionsSubmit, u
             <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
               <table className="w-full table-fixed">
                 <colgroup>
-                  <col className="w-16" />
-                  <col className="w-64" />
-                  <col className="w-48" />
+                  <col style={{ width: '80px' }} />
+                  <col style={{ width: '280px' }} />
+                  <col style={{ width: '200px' }} />
                   <col />
                 </colgroup>
                 <thead className="bg-gray-50 border-b border-gray-200">
@@ -123,7 +123,7 @@ export default function PlanningComponent({ planningSteps, onSelectionsSubmit, u
                     
                     return (
                       <tr key={step.id} className="hover:bg-gray-50 transition-colors">
-                        <td className="px-4 py-4">
+                        <td className="px-4 py-4" style={{ width: '80px' }}>
                           <input
                             type="checkbox"
                             checked={selectedSteps.includes(step.id)}
@@ -132,10 +132,10 @@ export default function PlanningComponent({ planningSteps, onSelectionsSubmit, u
                             className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
                           />
                         </td>
-                        <td className="px-4 py-4">
+                        <td className="px-4 py-4" style={{ width: '280px' }}>
                           <div className="font-medium text-gray-900">{step.title}</div>
                         </td>
-                        <td className="px-4 py-4">
+                        <td className="px-4 py-4" style={{ width: '200px' }}>
                           <div className="text-sm text-gray-600">{frequency || '—'}</div>
                         </td>
                         <td className="px-4 py-4">
