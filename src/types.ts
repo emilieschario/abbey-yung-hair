@@ -44,3 +44,9 @@ export interface PlanningSelections {
   date: string;
   selectedSteps: number[];
 }
+
+export interface UserProductPreference {
+  userId: string;
+  stepId: number;
+  productName: string;
+}
