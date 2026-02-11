@@ -175,11 +175,4 @@ export const steps: Step[] = [
     actions: ['Apply to scalp or hair'],
     products: ['Hair vitamins'],
   },
-  {
-    id: 21,
-    title: 'Final Styling',
-    description: 'Complete your look with final styling products.',
-    isOptional: true,
-    actions: ['Apply any additional styling products as needed'],
-  },
 ];
