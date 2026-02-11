@@ -26,8 +26,7 @@ export const steps: Step[] = [
     description: 'Clarifying shampoos are designed to deep-clean your hair and scalp, removing product buildup, excess oils, and impurities that regular shampoos may leave behind.',
     isOptional: true,
     actions: ['Wet hair thoroughly', 'Apply clarifying shampoo and massage into scalp', 'Rinse thoroughly'],
-    products: ['L\'Oreal Ever Pure Clarify Shampoo in the blue bottle', 'Garnier Fructis Pure Clean Silicone-Free Purifying Shampoo', 'Dove Scalp + Hair Therapy Clarifying Shampoo', 'Pantene Pro-V Volume & Body Shampoo', 'L\'Oréal Professionnel Metal Detox Shampoo', 'Living Proof Clarifying Detox Shampoo', 'K18 Peptide Prep Shampoo', 'OUAI Detox Shampoo'],
-    preferredProduct: 'L\'Oréal everpure clarifying shampoo',
+    products: ['L\'Oreal Paris EverPure Clarify Shampoo for Build Up'],
     notes: 'Use at least once a week, or more frequently if needed based on your hair and scalp condition.',
   },
   {
@@ -36,7 +35,7 @@ export const steps: Step[] = [
     description: 'This is your regular, everyday shampoo for wash days when you don\'t need a deep clarifying cleanse. These formulas are typically gentler and often include bond-repairing or strengthening ingredients.',
     isOptional: false,
     actions: ['Wet hair thoroughly', 'Apply shampoo and massage into scalp', 'Rinse thoroughly'],
-    products: ['Garnier Fructis Hair Filler + Vitamin Cg Strength Repair Shampoo (sulfate-free)', 'Not Your Mother\'s Tough Love Bonding Shampoo', 'Dove Intensive Repair Shampoo', 'Dove Bond Strength Shampoo', 'L\'Oreal Ever Pure Bond Repair Shampoo in the pink bottle', 'Pureology Strength Cure Shampoo', 'Amika The Kure Bond Repair Shampoo', 'Redken Acidic Bonding Concentrate Shampoo'],
+    products: ['L\'Oreal Paris EverPure Sulfate Free Bond Repair Color Care Shampoo', 'Garnier Fructis Hair Filler + Vitamin Cg Strength Repair Shampoo (sulfate-free)', 'Not Your Mother\'s Tough Love Bonding Shampoo', 'Dove Intensive Repair Shampoo', 'Dove Bond Strength Shampoo', 'Pureology Strength Cure Shampoo', 'Amika The Kure Bond Repair Shampoo', 'Redken Acidic Bonding Concentrate Shampoo'],
     notes: 'Use as many times per week as needed for your hair type.',
   },
   {
