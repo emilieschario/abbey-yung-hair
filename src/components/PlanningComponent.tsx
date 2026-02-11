@@ -91,10 +91,16 @@ export default function PlanningComponent({ planningSteps, onSelectionsSubmit, u
           <div key={category} className="space-y-3">
             <h2 className="text-lg font-semibold text-gray-800">{categoryLabels[category]}</h2>
             <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-              <table className="w-full">
+              <table className="w-full table-fixed">
+                <colgroup>
+                  <col className="w-16" />
+                  <col className="w-64" />
+                  <col className="w-48" />
+                  <col />
+                </colgroup>
                 <thead className="bg-gray-50 border-b border-gray-200">
                   <tr>
-                    <th className="w-12 px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Select
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
