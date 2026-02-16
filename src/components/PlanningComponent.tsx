@@ -89,8 +89,8 @@ export default function PlanningComponent({ planningSteps, onSelectionsSubmit, u
 
         {Object.entries(groupedSteps).map(([category, steps]) => (
           <div key={category} className="space-y-3">
-            <h2 className="text-lg font-semibold text-gray-800">{categoryLabels[category]}</h2>
-            <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+            <h2 className="text-lg font-semibold text-white">{categoryLabels[category]}</h2>
+            <div className="bg-white rounded-lg border-2 border-white overflow-hidden shadow-[0_0_0_2px_white]">
               <table className="w-full table-fixed">
                 <colgroup>
                   <col style={{ width: '80px' }} />
@@ -98,7 +98,7 @@ export default function PlanningComponent({ planningSteps, onSelectionsSubmit, u
                   <col style={{ width: '200px' }} />
                   <col />
                 </colgroup>
-                <thead className="bg-gray-50 border-b border-gray-200">
+                <thead className="bg-gray-50 border-b-2 border-white">
                   <tr>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Select
@@ -114,7 +114,7 @@ export default function PlanningComponent({ planningSteps, onSelectionsSubmit, u
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-200">
+                <tbody className="divide-y-2 divide-white">
                   {steps.map(step => {
                     // Extract and simplify frequency from notes
                     const frequency = simplifyFrequency(step.notes || '');
