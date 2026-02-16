@@ -101,7 +101,9 @@ export default function Home() {
   };
 
   const handlePlanningSubmit = (selected: number[]) => {
-    setSelectedStepsIds(selected);
+    // Sort selected steps by their step number to maintain proper order
+    const sortedSelected = [...selected].sort((a, b) => a - b);
+    setSelectedStepsIds(sortedSelected);
     setCurrentSelectedIndex(0);
     setCurrentSession([]);
     setIsPlanning(false);
@@ -111,7 +113,7 @@ export default function Home() {
     const newSelection: PlanningSelections = {
       userId: username,
       date: today,
-      selectedSteps: selected,
+      selectedSteps: sortedSelected,
     };
     const newSelections = [...planningSelections, newSelection];
     savePlanningSelections(newSelections);
