@@ -41,10 +41,31 @@ export default function PlanningComponent({ planningSteps, onSelectionsSubmit, u
     optional: planningSteps.filter(s => s.category === 'optional'),
   };
 
-  const categoryLabels: Record<string, string> = {
-    required: 'Required steps',
-    recommended: 'Recommended steps',
-    optional: 'Optional steps',
+  const categoryConfig: Record<string, { label: string; description: string; badgeClass: string; icon: string; borderColor: string; bgColor: string }> = {
+    required: {
+      label: 'Required Steps',
+      description: 'These steps are essential for every session',
+      badgeClass: 'badge-required',
+      icon: '🔒',
+      borderColor: 'border-rose-200',
+      bgColor: 'bg-rose-50/50',
+    },
+    recommended: {
+      label: 'Recommended Steps',
+      description: 'Based on your recent routine',
+      badgeClass: 'badge-recommended',
+      icon: '⭐',
+      borderColor: 'border-amber-200',
+      bgColor: 'bg-amber-50/50',
+    },
+    optional: {
+      label: 'Optional Steps',
+      description: 'Add these based on your needs today',
+      badgeClass: 'badge-optional',
+      icon: '✨',
+      borderColor: 'border-gray-200',
+      bgColor: 'bg-gray-50/50',
+    },
   };
 
   const greeting = isReturningUser ? `Welcome back, ${username}!` : `Welcome, ${username}!`;
@@ -77,86 +98,128 @@ export default function PlanningComponent({ planningSteps, onSelectionsSubmit, u
     return simplified.trim();
   };
 
+  const selectedCount = selectedSteps.length;
+  const totalCount = planningSteps.length;
+
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-6xl mx-auto space-y-6">
-        <div>
-          <h1 className="text-3xl font-semibold text-gray-900">{greeting}</h1>
-          <p className="text-gray-600 mt-2">
-            Select the steps you want to include in {"today's"} session. Required steps are pre-selected and cannot be deselected.
+    <div className="min-h-screen px-4 py-6 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto space-y-6">
+        {/* Header */}
+        <div className="text-center sm:text-left">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">{greeting}</h1>
+          <p className="text-gray-500 mt-2 text-sm sm:text-base">
+            Select the steps for {"today's"} session. Required steps are always included.
           </p>
+          <div className="mt-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-rose-50 border border-rose-100">
+            <span className="text-sm font-semibold text-rose-700">{selectedCount}</span>
+            <span className="text-sm text-rose-500">of {totalCount} steps selected</span>
+          </div>
         </div>
 
-        {Object.entries(groupedSteps).map(([category, steps]) => (
-          <div key={category} className="space-y-3">
-            <h2 className="text-lg font-semibold text-white">{categoryLabels[category]}</h2>
-            <div className="bg-white rounded-lg border-2 border-white overflow-hidden shadow-[0_0_0_2px_white]">
-              <table className="w-full table-fixed">
-                <colgroup>
-                  <col style={{ width: '80px' }} />
-                  <col style={{ width: '280px' }} />
-                  <col style={{ width: '200px' }} />
-                  <col />
-                </colgroup>
-                <thead className="bg-gray-50 border-b-2 border-white">
-                  <tr>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Select
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Step
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Frequency
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Product
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y-2 divide-white">
-                  {steps.map(step => {
-                    // Extract and simplify frequency from notes
-                    const frequency = simplifyFrequency(step.notes || '');
-                    // Get first product if available
-                    const firstProduct = step.products && step.products.length > 0 ? step.products[0] : null;
-                    
-                    return (
-                      <tr key={step.id} className="hover:bg-gray-50 transition-colors">
-                        <td className="px-4 py-4" style={{ width: '80px' }}>
-                          <input
-                            type="checkbox"
-                            checked={selectedSteps.includes(step.id)}
-                            onChange={() => toggleStep(step.id)}
-                            disabled={step.category === 'required'}
-                            className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
-                          />
-                        </td>
-                        <td className="px-4 py-4" style={{ width: '280px' }}>
-                          <div className="font-medium text-gray-900">{step.title}</div>
-                        </td>
-                        <td className="px-4 py-4" style={{ width: '200px' }}>
-                          <div className="text-sm text-gray-600">{frequency || '—'}</div>
-                        </td>
-                        <td className="px-4 py-4">
-                          <div className="text-sm text-gray-600">{firstProduct || '—'}</div>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        ))}
+        {/* Step Groups */}
+        {Object.entries(groupedSteps).map(([category, categorySteps]) => {
+          if (categorySteps.length === 0) return null;
+          const config = categoryConfig[category];
 
-        <div className="text-center pt-4">
-          <button
-            onClick={handleSubmit}
-            className="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-sm"
-          >
-            Start session
-          </button>
+          return (
+            <div key={category} className="space-y-3">
+              {/* Category Header */}
+              <div className="flex items-center gap-3">
+                <span className="text-lg">{config.icon}</span>
+                <div>
+                  <h2 className="text-base sm:text-lg font-bold text-gray-900">{config.label}</h2>
+                  <p className="text-xs text-gray-500">{config.description}</p>
+                </div>
+              </div>
+
+              {/* Steps List - Card layout for mobile, table-like for desktop */}
+              <div className="space-y-2">
+                {categorySteps.map(step => {
+                  const frequency = simplifyFrequency(step.notes || '');
+                  const firstProduct = step.products && step.products.length > 0 ? step.products[0] : null;
+                  const isSelected = selectedSteps.includes(step.id);
+                  const isRequired = step.category === 'required';
+
+                  return (
+                    <button
+                      key={step.id}
+                      type="button"
+                      onClick={() => toggleStep(step.id)}
+                      disabled={isRequired}
+                      className={`w-full text-left p-4 rounded-xl border-2 transition-all duration-200 ${
+                        isSelected
+                          ? `${config.bgColor} ${config.borderColor} shadow-sm`
+                          : 'bg-white border-gray-100 hover:border-gray-200 hover:shadow-sm'
+                      } ${isRequired ? 'cursor-default' : 'cursor-pointer active:scale-[0.99]'}`}
+                    >
+                      <div className="flex items-start gap-3">
+                        {/* Checkbox */}
+                        <div className="pt-0.5 flex-shrink-0">
+                          <div className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-colors duration-150 ${
+                            isSelected
+                              ? 'bg-rose-500 border-rose-500'
+                              : 'border-gray-300 bg-white'
+                          } ${isRequired ? 'opacity-60' : ''}`}>
+                            {isSelected && (
+                              <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                              </svg>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Content */}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <h3 className="font-semibold text-gray-800 text-sm sm:text-base">{step.title}</h3>
+                            {isRequired && (
+                              <span className="badge-required text-[10px] px-2 py-0.5">Required</span>
+                            )}
+                          </div>
+
+                          {/* Details row */}
+                          <div className="mt-1.5 flex flex-wrap items-center gap-x-4 gap-y-1">
+                            {frequency && (
+                              <span className="inline-flex items-center text-xs text-gray-500">
+                                <svg className="w-3.5 h-3.5 mr-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                {frequency}
+                              </span>
+                            )}
+                            {firstProduct && (
+                              <span className="inline-flex items-center text-xs text-gray-500 truncate max-w-[250px] sm:max-w-none">
+                                <svg className="w-3.5 h-3.5 mr-1 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                                </svg>
+                                {firstProduct}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
+
+        {/* Submit Button */}
+        <div className="sticky bottom-0 py-4 bg-gradient-to-t from-white via-white to-transparent -mx-4 px-4 sm:-mx-6 sm:px-6">
+          <div className="max-w-md mx-auto">
+            <button
+              onClick={handleSubmit}
+              className="btn-primary w-full text-base py-3.5"
+            >
+              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Start Session ({selectedCount} steps)
+            </button>
+          </div>
         </div>
       </div>
     </div>

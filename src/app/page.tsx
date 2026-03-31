@@ -159,39 +159,64 @@ export default function Home() {
       });
 
       return (
-        <div className="min-h-screen bg-gray-50 p-6">
+        <div className="min-h-screen px-4 py-8 sm:px-6 lg:px-8">
           <div className="max-w-2xl mx-auto space-y-6">
-            <div className="flex justify-between items-center">
-              <h1 className="text-3xl font-semibold text-gray-900">Hair Care Tracking</h1>
+            {/* Header */}
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
+                  Session History
+                </h1>
+                <p className="mt-1 text-sm text-gray-500">Track your hair care journey</p>
+              </div>
               <button
                 onClick={() => setViewTracking(false)}
-                className="bg-white text-gray-700 px-4 py-2 rounded-lg font-semibold border border-gray-200 hover:bg-gray-100 transition-colors"
+                className="btn-secondary text-sm px-4 py-2"
               >
+                <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
                 Back
               </button>
             </div>
 
-            <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
-              <h2 className="text-xl font-semibold mb-2 text-gray-900">Session Summary</h2>
-              <p className="text-gray-600">Total sessions completed: {sessions.length}</p>
+            {/* Summary Card */}
+            <div className="card-solid p-6">
+              <div className="flex items-center gap-4">
+                <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-rose-100 to-rose-200">
+                  <svg className="w-7 h-7 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-500">Total Sessions</p>
+                  <p className="text-3xl font-bold text-gray-900">{sessions.length}</p>
+                </div>
+              </div>
             </div>
 
-            <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
-              <h2 className="text-xl font-semibold mb-4 text-gray-900">Step Performance</h2>
-              <div className="space-y-4">
+            {/* Step Performance */}
+            <div className="card-solid p-6">
+              <h2 className="text-lg font-bold text-gray-900 mb-5">Step Performance</h2>
+              <div className="space-y-3">
                 {stepStats.map(step => (
-                  <div key={step.id} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
-                    <div className="flex-1">
-                      <h3 className="font-medium text-gray-900">{step.title}</h3>
-                      <p className="text-sm text-gray-500">
-                        Performed {step.performedCount} out of {sessions.length} sessions ({step.percentage}%)
-                      </p>
+                  <div key={step.id} className="group p-4 rounded-xl bg-gray-50/80 hover:bg-gray-50 border border-gray-100 transition-colors duration-200">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-semibold text-gray-800 text-sm truncate">{step.title}</h3>
+                        <p className="text-xs text-gray-500 mt-0.5">
+                          {step.performedCount} of {sessions.length} sessions
+                        </p>
+                      </div>
+                      <span className="ml-3 text-sm font-bold text-gray-700 tabular-nums">
+                        {step.percentage}%
+                      </span>
                     </div>
-                    <div className="w-20 bg-gray-200 rounded-full h-2 ml-4">
+                    <div className="progress-bar-track h-2">
                       <div
-                        className="bg-green-600 h-2 rounded-full"
+                        className="progress-bar-fill h-2"
                         style={{ width: `${step.percentage}%` }}
-                      ></div>
+                      />
                     </div>
                   </div>
                 ))}
@@ -204,72 +229,98 @@ export default function Home() {
 
     if (!usernameEntered) {
       return (
-        <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-6">
-          <div className="bg-white rounded-lg shadow-sm max-w-lg w-full p-8 text-center border border-gray-200">
-            <h1 className="text-3xl font-semibold text-gray-900 mb-4">
+        <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12">
+          <div className="card-solid max-w-md w-full p-8 sm:p-10 text-center">
+            {/* Logo / Icon */}
+            <div className="mx-auto mb-6 flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-rose-400 to-rose-500 shadow-lg shadow-rose-200/60">
+              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+              </svg>
+            </div>
+
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
               Abbey Yung Hair Method
             </h1>
-            <p className="text-gray-600 text-base mb-8 leading-relaxed">
-              Transform your hair care routine with this comprehensive 21-step method.
-              Get glowing, healthy hair with expert recommendations and guided steps.
+            <p className="text-gray-500 text-sm sm:text-base mb-8 leading-relaxed max-w-sm mx-auto">
+              Transform your hair care routine with this comprehensive step-by-step method for glowing, healthy hair.
             </p>
-            <div className="space-y-6">
-              <form onSubmit={handleUsernameSubmit} className="space-y-6">
-                <div className="relative">
-                  <input
-                    type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' && username.trim()) {
-                        handleUsernameSubmit(e);
-                      }
-                    }}
-                    placeholder="Enter your username"
-                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-200 focus:border-green-500 transition-colors"
-                    required
-                    autoFocus
-                  />
-                </div>
-              </form>
-            </div>
-            <div className="mt-6 text-gray-500 text-sm">
-              Follow the steps for salon-quality results at home!
-            </div>
+
+            <form onSubmit={handleUsernameSubmit} className="space-y-4">
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && username.trim()) {
+                    handleUsernameSubmit(e);
+                  }
+                }}
+                placeholder="Enter your name"
+                className="input-field text-center"
+                required
+                autoFocus
+              />
+              <button
+                type="submit"
+                disabled={!username.trim()}
+                className="btn-primary w-full"
+              >
+                Get Started
+              </button>
+            </form>
+
+            <p className="mt-6 text-xs text-gray-400">
+              Follow the steps for salon-quality results at home ✨
+            </p>
           </div>
         </div>
       );
     }
 
     return (
-      <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-6">
-        <div className="bg-white rounded-lg shadow-sm max-w-lg w-full p-8 text-center border border-gray-200">
-          <h1 className="text-3xl font-semibold text-gray-900 mb-4">
+      <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12">
+        <div className="card-solid max-w-md w-full p-8 sm:p-10 text-center">
+          {/* Logo / Icon */}
+          <div className="mx-auto mb-6 flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-rose-400 to-rose-500 shadow-lg shadow-rose-200/60">
+            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+            </svg>
+          </div>
+
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
             Abbey Yung Hair Method
           </h1>
-          <p className="text-gray-600 text-base mb-8 leading-relaxed">
-            Transform your hair care routine with this comprehensive 21-step method.
-            Get glowing, healthy hair with expert recommendations and guided steps.
+          <p className="text-gray-500 text-sm sm:text-base mb-8 leading-relaxed max-w-sm mx-auto">
+            Transform your hair care routine with this comprehensive step-by-step method for glowing, healthy hair.
           </p>
-          <div className="space-y-4">
+
+          <div className="space-y-3">
             <button
               onClick={handleStart}
-              className="bg-green-600 text-white text-base px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors w-full"
+              className="btn-primary w-full"
             >
-              Get Started
+              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Start Session
             </button>
             {sessions.length > 0 && (
               <button
                 onClick={() => setViewTracking(true)}
-                className="bg-white text-gray-700 text-base px-6 py-3 rounded-lg font-semibold border border-gray-200 hover:bg-gray-100 transition-colors w-full"
+                className="btn-secondary w-full"
               >
-                View Tracking ({sessions.length} sessions)
+                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+                View History ({sessions.length} sessions)
               </button>
             )}
           </div>
-          <div className="mt-6 text-gray-500 text-sm">
-            Welcome, {username}! Follow the steps for salon-quality results at home!
-          </div>
+
+          <p className="mt-6 text-xs text-gray-400">
+            Welcome back, {username}! ✨
+          </p>
         </div>
       </div>
     );
@@ -279,19 +330,19 @@ export default function Home() {
   const progress = selectedStepsIds.length > 0 ? ((currentSelectedIndex + 1) / selectedStepsIds.length) * 100 : 0;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       {/* Progress Bar */}
-      <div className="bg-white border-b border-gray-200">
-        <div className="max-w-md mx-auto px-4 py-3">
-          <div className="flex justify-between text-sm text-gray-600 mb-1">
+      <div className="sticky top-0 z-10 bg-white/80 backdrop-blur-md border-b border-gray-100">
+        <div className="max-w-lg mx-auto px-4 py-3">
+          <div className="flex justify-between text-xs font-medium text-gray-500 mb-1.5">
             <span>Step {currentSelectedIndex + 1} of {selectedStepsIds.length}</span>
-            <span>{Math.round(progress)}% Complete</span>
+            <span className="tabular-nums">{Math.round(progress)}%</span>
           </div>
-          <div className="w-full bg-gray-200 rounded-full h-2">
+          <div className="progress-bar-track h-2">
             <div
-              className="bg-green-600 h-2 rounded-full transition-all duration-300"
+              className="progress-bar-fill h-2"
               style={{ width: `${progress}%` }}
-            ></div>
+            />
           </div>
         </div>
       </div>
