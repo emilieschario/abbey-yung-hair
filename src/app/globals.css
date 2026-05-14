@@ -1,18 +1,18 @@
 :root {
-  --primary: #1a7a7a;
-  --primary-dark: #136060;
-  --secondary: #2a9d8f;
+  --primary: #1ABC9C;
+  --primary-dark: #16A085;
+  --secondary: #48D1CC;
   --accent: #e76f51;
-  --background: #1a7a7a;
-  --card: #1a7a7a;
+  --background: #1ABC9C;
+  --card: #1ABC9C;
   --text: #000000;
   --text-secondary: #ffffff;
-  --border: #136060;
-  --success: #2a9d8f;
+  --border: #16A085;
+  --success: #48D1CC;
   --warning: #f59e0b;
   --danger: #ef4444;
-  --teal-bg: #1a7a7a;
-  --teal-dark: #136060;
+  --teal-bg: #1ABC9C;
+  --teal-dark: #16A085;
 }
 
 * {
@@ -72,7 +72,7 @@ body {
 .ml-4 { margin-left: 1rem; }
 .ml-6 { margin-left: 1.5rem; }
 .mx-auto { margin-left: auto; margin-right: auto; }
-.bg-green-50 { background-color: #136060; }
+.bg-green-50 { background-color: #16A085; }
 .bg-green-200 { background-color: #000000; }
 .border-green-200 { border-color: #000000; }
 .max-w-md { max-width: 28rem; }
@@ -113,9 +113,9 @@ body {
 .text-blue-600 { color: #000000; }
 .text-green-500 { color: #000000; }
 .bg-gray-50 { background-color: var(--teal-bg); }
-.bg-gray-100 { background-color: #136060; }
-.bg-gray-200 { background-color: #2a9d8f; }
-.bg-gray-500 { background-color: #136060; }
+.bg-gray-100 { background-color: #16A085; }
+.bg-gray-200 { background-color: #48D1CC; }
+.bg-gray-500 { background-color: #16A085; }
 .bg-blue-600 { background-color: #000000; }
 .bg-green-500 { background-color: #000000; }
 .bg-green-600 { background-color: #000000; }
@@ -133,15 +133,15 @@ body {
 .border-gray-200 { border-color: #000000; }
 .border-gray-300 { border-color: #000000; }
 .border-white\/20 { border-color: rgba(0, 0, 0, 0.5); }
-.bg-white\/90 { background-color: rgba(26, 122, 122, 0.95); }
-.bg-white\/70 { background-color: rgba(26, 122, 122, 0.9); }
-.bg-white\/60 { background-color: rgba(26, 122, 122, 0.85); }
-.bg-primary\/10 { background-color: rgba(26, 122, 122, 0.2); }
-.bg-primary\/5 { background-color: rgba(26, 122, 122, 0.1); }
+.bg-white\/90 { background-color: rgba(26, 188, 156, 0.95); }
+.bg-white\/70 { background-color: rgba(26, 188, 156, 0.9); }
+.bg-white\/60 { background-color: rgba(26, 188, 156, 0.85); }
+.bg-primary\/10 { background-color: rgba(26, 188, 156, 0.2); }
+.bg-primary\/5 { background-color: rgba(26, 188, 156, 0.1); }
 .text-primary { color: #ffffff; }
-.hover\:bg-white:hover { background-color: #136060; }
+.hover\:bg-white:hover { background-color: #16A085; }
 .hover\:bg-gray-600:hover { background-color: #000000; }
-.hover\:bg-gray-100:hover { background-color: #136060; }
+.hover\:bg-gray-100:hover { background-color: #16A085; }
 .hover\:bg-blue-700:hover { background-color: #000000; }
 .hover\:bg-green-600:hover { background-color: #000000; }
 .hover\:bg-green-700:hover { background-color: #000000; }
